@@ -6,7 +6,7 @@ theme: jekyll-theme-chirpy
 # The language of the webpage › http://www.lingoes.net/en/translator/langcode.htm
 # If it has the same name as one of the files in folder `_data/locales`, the layout language will also be changed,
 # otherwise, the layout language will use the default value of 'en'.
-lang: ko
+lang: ko-KR
 
 # Change to your timezone › https://kevinnovak.github.io/Time-Zone-Picker
 timezone: Asia/Seoul
@@ -14,11 +14,11 @@ timezone: Asia/Seoul
 # jekyll-seo-tag settings › https://github.com/jekyll/jekyll-seo-tag/blob/master/docs/usage.md
 # ↓ --------------------------
 
-title: 민혁의　개발　블로그 # the main title
+title: 민혁의 개발 블로그 # the main title
 
-tagline: Developer + Cloud Engineer + Hacker를　목표로　공부하고　있습니다． # it will display as the sub-title
+tagline: Developer + Cloud Engineer + Hacker를 목표로 공부하고 있습니다． # it will display as the sub-title
 
-description: 수업과　개인　학습을　통해　Linux, AWS, Kubernetes 지식과 Cloud Infra 운영　노하우를　기록하고　공유하는　기술　블로그입니다．
+description: 수업과 개인 학습을 통해 Linux, AWS, Kubernetes 지식과 Cloud Infra 운영 노하우를 기록하고 공유하는 기술 블로그입니다．
 
 # Fill in the protocol & hostname for your site.
 # e.g. 'https://username.github.io', note that it does not end with a '/'.
