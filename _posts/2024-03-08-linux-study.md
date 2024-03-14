@@ -1,17 +1,15 @@
 ---
-title: "리눅스 개념 정리 1"
-excerpt: "3월 8일 수업 중 배웠던 개념 정리이다."
-
-categories:
-    - Blog
-tags:
-    - [Linux]
+title: 리눅스 수업 정리
+excerpt: 리눅스 패스워드 저장 위치 및 그룹 설정과 권한, wheel 그룹, 가상호스트와 DNS 설정에 대한 학습
+author: minyeokue
+date: 2024-03-08 18:00:00 +0900
+last_modified_at: 2024-03-14 22:00:00 +0900
+categories: [Linux Class]
+tags: [Linux, Network, Permission]
+render_with_liquid: false
 
 toc: true
 toc_sticky: true
-
-date: 2024-03-08
-last_modified_at: 2024-03-09
 ---
 
 ## cat 명령어를 사용해 /etc/shadow 파일을 확인해보자.

@@ -1,10 +1,11 @@
 ---
 title: 리눅스 종합문제 1
-excerpt: 리눅스 연습을 위한 예제들을 풀어보았다.
+excerpt: 리눅스 기본 명령어 및 하드디스크 레이드
 author: minyeokue
 date: 2024-03-07 18:00:00 +0900
-categories: [Blogging]
-tags: [writing]
+last_modified_at: 2024-03-14 22:00:00 +0900
+categories: [Exercise]
+tags: [Linux]
 render_with_liquid: false
 
 toc: true

@@ -3,9 +3,9 @@ title: 리눅스 종합문제 2
 excerpt: DNS 서버와 Apache 웹서버, DB서버, 프록시서버에 ssl 자체 서명 인증서를 통한 접속과 라운드로빈 실습
 author: minyeokue
 date: 2024-03-14 20:00:00 +0900
-last_modified_at: 2024-03-14 20:00:00 +0900
-categories: [Blogging]
-tags: [ Linux, Network ]
+last_modified_at: 2024-03-14 22:00:00 +0900
+categories: [Exercise]
+tags: [Linux, Window, Network, Secure]
 render_with_liquid: false
 
 toc: true
