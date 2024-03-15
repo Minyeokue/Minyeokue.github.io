@@ -2,10 +2,9 @@
 title: 리눅스 종합문제 2
 author: minyeokue
 date: 2024-03-14 20:00:00 +0900
-last_modified_at: 2024-03-14 23:00:00 +0900
+last_modified_at: 2024-03-15 14:00:00 +0900
 categories: [Exercise]
 tags: [Linux, Window, Network, Secure]
-render_with_liquid: false
 
 toc: true
 toc_sticky: true
