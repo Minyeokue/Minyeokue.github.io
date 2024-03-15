@@ -1,6 +1,5 @@
 ---
 title: 리눅스 수업 정리
-excerpt: 리눅스 패스워드 저장 위치 및 그룹 설정과 권한, wheel 그룹, 가상호스트와 DNS 설정에 대한 학습
 author: minyeokue
 date: 2024-03-08 18:00:00 +0900
 last_modified_at: 2024-03-14 22:00:00 +0900
@@ -10,6 +9,10 @@ render_with_liquid: false
 
 toc: true
 toc_sticky: true
+---
+
+리눅스 패스워드 저장 위치 및 그룹 설정과 권한, **wheel 그룹**, **가상호스트**와 DNS 설정에 대한 학습
+
 ---
 
 ## cat 명령어를 사용해 /etc/shadow 파일을 확인해보자.

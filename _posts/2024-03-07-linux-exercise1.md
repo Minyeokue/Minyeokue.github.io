@@ -1,6 +1,5 @@
 ---
 title: 리눅스 종합문제 1
-excerpt: 리눅스 기본 명령어 및 하드디스크 레이드
 author: minyeokue
 date: 2024-03-07 18:00:00 +0900
 last_modified_at: 2024-03-14 22:00:00 +0900
@@ -10,6 +9,10 @@ render_with_liquid: false
 
 toc: true
 toc_sticky: true
+---
+
+리눅스 기본 명령어 및 하드디스크 레이드
+
 ---
 
 ## 1. /linux/test 디렉토리 생성 후 vi 편집기로 "test mail" 입력 후 test.txt로 저장
