@@ -1,8 +1,8 @@
 ---
-title: 리눅스 종합문제 2
+title: 리눅스 종합문제 3
 author: minyeokue
 date: 2024-03-19 22:16:22 +0900
-last_modified_at: 2024-03-19 22:16:29 +0900
+last_modified_at: 2024-03-20 02:30:55 +0900
 categories: [Exercise]
 tags: [Linux, Window, Network, Secure]
 
