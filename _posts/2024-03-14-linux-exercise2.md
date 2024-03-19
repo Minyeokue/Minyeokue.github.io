@@ -2,7 +2,7 @@
 title: 리눅스 종합문제 2
 author: minyeokue
 date: 2024-03-14 20:00:00 +0900
-last_modified_at: 2024-03-19 11:06:39 +0900
+last_modified_at: 2024-03-19 21:34:42 +0900
 categories: [Exercise]
 tags: [Linux, Window, Network, Secure]
 
@@ -10,12 +10,17 @@ toc: true
 toc_sticky: true
 ---
 
+<br>
+
 DNS서버와 Apache 웹서버, DB서버, 프록시서버에 ssl 자체 서명 인증서를 통한 접속과 라운드로빈 실습
+
+<br>
 
 ---
 <br>
 
 ## 1. 개요
+
 <br>
 
 #### 1단계
@@ -24,20 +29,27 @@ DNS서버와 Apache 웹서버, DB서버, 프록시서버에 ssl 자체 서명 �
 
 - CentOS7(GUI)  [192.168.1.10]   => 주 DNS 서버, http 웹서버
 <br>
+
 - CentOS8       [192.168.1.20]   => 보조 DNS 서버, https 웹서버
 <br>
+
 - Window 2003   [192.168.1.50]   => 보조 DNS 서버
-  
+<br>
+
 윈도우 서버에서 구현 사항 확인
 
 <br>
 
 #### 2단계
 
+<br>
+
 - CentOS7(GUI)  [192.168.1.10]  => HAproxy 서버, MariaDB 클라이언트
 <br>
+
 - CentOS8-2     [192.168.1.30]  => Apache 웹서버, MariaDB 서버
 <br>
+
 - CentOS7-2     [192.168.1.40]  => Apache 웹서버, MariaDB 서버
 <br>
 
@@ -47,21 +59,32 @@ CentOS7에서 HAproxy로 구현한 라운드로빈 방식으로 웹서버와 DB�
 
 ## 2. 1단계 실습
 
+<br>
 
 #### Linux01
+
 ---
 
+<br>
+
 먼저 CentOS7(이하 Linux01)에서 DNS 서버와 웹서버 패키지를 다운로드
+
+<br>
 
 ```zsh
 [root@Linux01 ~]# yum -y install caching-nameserver httpd
 ```
 
-네임 서버에 관련된 설정(configure; -> conf)을 수정한다
 <br>
+
+네임 서버에 관련된 설정(configure; -> conf)을 수정한다
+
+<br>
+
 ```zsh
     [root@Linux01 ~]# vim /etc/named.conf
 ```
+
 <br>
 
 ![named.conf](/assets/img/2024-03-14/1.png)
@@ -118,11 +141,13 @@ ls 명령어로 /var/named 아래에 있는 파일들을 확인하고, 그 중 n
 <br>
 
 ![/var/named/ls-l](/assets/img/2024-03-14/3.png)
+
 <br>
 
 ```zsh
 [root@Linux01 named]# vim gitblog.vm.zone
 ```
+
 <br>
 
 ![gitblog.vm.zone](/assets/img/2024-03-14/4.png)
@@ -147,6 +172,7 @@ OK
 <br>
 
 이제 Linux01에 웹서버가 잘 작동할 수 있도록 html 파일을 생성하고, 가상호스트를 구현해보겠다.
+
 <br>
 
 *가상호스트란 하나의 서버에 여러 대의 웹서버를 구현하는 것과 비슷한 효과를 볼 수 있다.*
@@ -203,6 +229,7 @@ CentOS7 기준 다음 줄들을 수정한다.
 
 :wq
 ```
+
 <br>
 
 이렇게 수정한 뒤 문법에 문제가 없는지 체크해보자
@@ -215,6 +242,7 @@ CentOS7 기준 다음 줄들을 수정한다.
 ...
 Syntax OK
 ```
+
 <br>
 
 문제가 없다면 구문 OK 라고 나올 것이다.
@@ -224,15 +252,17 @@ Syntax OK
 ```zsh
 [root@Linux01 ~]# systemctl enable --now httpd
 ```
+
 <br>
 
 `systemctl` 명령어로 http 데몬 서비스를 활성화한다.
 
 <br>
 
+#### CentOS8
+
 <br>
 
-#### CentOS8
 ---
 
 보조 DNS 서버와 웹 서버를 구축하기 위해 필요한 패키지를 설치한다.
@@ -242,6 +272,7 @@ Syntax OK
 ```zsh
 [root@centos8 ~]# yum -y install caching-nameserver httpd
 ```
+
 <br>
 
 CentOS7(Linux01)에서 했던 것 처럼 `/var/named.conf` 파일을 수정한다. => any; any;
@@ -276,6 +307,7 @@ CentOS7(Linux01)에서 했던 것 처럼 `/var/named.conf` 파일을 수정한�
 [root@centos8 ~]# cd /var/www/html
 [root@centos8 html]# echo ssl.gitblog.vm site > index.html
 ```
+
 <br>
 
 SSL(Secure Socket Layer) 인증으로 자체 서명한 인증서를 만들기 위해 관련 패키지를 설치한다.
@@ -285,6 +317,7 @@ SSL(Secure Socket Layer) 인증으로 자체 서명한 인증서를 만들기 �
 ```zsh
 [root@centos8 ~]# yum -y install mod_ssl
 ```
+
 <br>
 
 설치한 뒤 /etc/ssl/ 폴더로 이동해 private라는 폴더를 생성해 그 안에 인증서 파일과 개인키를 생성하도록 하겠다.
@@ -296,6 +329,7 @@ SSL(Secure Socket Layer) 인증으로 자체 서명한 인증서를 만들기 �
 [root@centos8 ssl]# mkdir private
 [root@centos8 ssl]# cd private
 ```
+
 <br>
 
 openssl 명령어로 개인키와 인증서를 생성한다.
@@ -305,6 +339,7 @@ openssl 명령어로 개인키와 인증서를 생성한다.
 ```zsh
 [root@centos8 private]# openssl req -x509 -nodes -newkey rsa:2048 -keyout gitblog.vm.key -out gitblog.vm.crt
 ```
+
 <br>
 
 rsa 알고리즘으로 2048비트 암호화를 실행해 **gitblog.vm.key**라는 개인키와 **gitblog.vm.crt**라는 인증서 파일을 생성한다.
@@ -335,6 +370,7 @@ https 자체 서명 인증서가 작성되었다.
 362 </VirtualHost>
 :wq
 ```
+
 <br>
 
 제일 아래 줄에 위 처럼 작성한다.
@@ -348,6 +384,7 @@ https 자체 서명 인증서가 작성되었다.
 ```zsh
 [root@centos8 ~]# vim /etc/httpd/conf.d/ssl.conf
 ```
+
 ```vim
 ...
 ...
@@ -363,6 +400,7 @@ https 자체 서명 인증서가 작성되었다.
 212 </VirtualHost>
 :wq
 ```
+
 <br>
 
 저장한 뒤 `httpd -t` 명령으로 문법을 체크하면 에러가 발생하는데 이 이유는 ssl 가상 호스트의 개인키와 인증서 파일의 위치를 모르기 때문이다.
@@ -379,10 +417,11 @@ https 자체 서명 인증서가 작성되었다.
 ```
 <br>
 
-<br>
+---
 
 #### window 2003
----
+
+<br>
 
 IP 설정
 
@@ -416,14 +455,13 @@ DNS 관리창 위치
 
 <br>
 
-불러와진 정방향 조회 영역
+불러온 정방향 조회 영역
 
 <br>
 
 ![window DNS  gitblog.vm](/assets/img/2024-03-14/11.png)
 
 <br>
-
 
 이제 internet explorer로 확인해보자
 
@@ -475,27 +513,36 @@ ssl은 explorer에서 확인할 수 없으니 firefox를 사용하겠다.
 
 ## 3. 2단계 실습
 
+<br>
 
 #### CentOS8 - 2, CentOS7 - 2 웹서버 구축 및 MariaDB 서버 구축
 
+<br>
+
 먼저 CentOS8-2을 설정한다
+
 <br>
 
 ```zsh
 [root@centos8 ~]# yum -y install httpd mariadb-server
 ```
+
 <br>
 
 관련 패키지를 설치한다.
+
 <br>
 
 이후 /var/www/html 안에 index.html 파일을 생성한다.
+
 <br>
 
 ```zsh
 [root@centos8 ~]# echo www1.site centos8 > /var/www/html/index.html
 [root@centos8 ~]# systemctl enable --now httpd
 ```
+
+<br>
 
 이후 mariaDB에 유저를 추가할 것인데, 조금 아래에서 한 번에 하도록 하겠다.
 
@@ -504,10 +551,12 @@ ssl은 explorer에서 확인할 수 없으니 firefox를 사용하겠다.
 ---
 
 이제 CentOS7-2에 구축할 것인데, index.html 대신 start.html을 기본 페이지로 인식시킬 수 있도록 바꾸자.
+
 <br>
 
 해당 설정 파일은 /etc/httpd/conf/httpd.conf 파일의 164번째 줄이나 이것은 CentOS7 기준이다.
 
+<br>
 
 ```zsh
 [root@Linux01 ~]# vim /etc/httpd/conf/httpd.conf
@@ -517,73 +566,96 @@ ssl은 explorer에서 확인할 수 없으니 firefox를 사용하겠다.
 [root@Linux01 ~]# systemctl enable --now httpd
 ```
 
+<br>
+
 ![start.html 추가](/assets/img/2024-03-14/17.png)
+
 <br>
 
 MariaDB에 데이터베이스를 생성하고 테이블을 만들어 간단한 조회를 해보도록 하겠다.
-<br>
 
+<br>
 
 ```zsh
 [root@Linux01 ~]# systemctl enable --now mariadb
 ```
+
 <br>
 
 심볼릭 링크 파일이 생성되었다는 알림이 나오면 `mysql`을 입력하고, 유저를 생성하겠다.
+
 <br>
 
 ```zsh
 [root@Linux01 ~]# mysql
 ```
+
 <br>
 
 ![CentOS7 mariadb user 추가](/assets/img/2024-03-14/18.png)
+
 <br>
 
 CentOS7 MariaDB 유저 추가 완료
+
 <br>
 
 ---
 
+<br>
+
 ![CentOS8 mariadb user 추가](/assets/img/2024-03-14/19.png)
+
 <br>
 
 CentOS8 MariaDB 유저 추가 완료
+
 <br>
 
 ---
 
-CentOS7
+<br>
 
-테이블을 생성하고 임의의 레코드를 삽입하겠다.
+CentOS7에서 테이블을 생성하고 임의의 레코드를 삽입하겠다.
 
-> 이미지 삽입
+<br>
+
 ![MariaDB CREATE, INSERT](/assets/img/2024-03-14/20.png)
 
+<br>
 
 #### HAProxy 설정
 
+<br>
+
 CentOS7(Linux01) 으로 돌아온다.
+
 <br>
 
 haproxy 패키지를 다운로드받는다.
+
 <br>
 
 ```zsh
 [root@Linux01 ~]# yum -y install haproxy
 ```
+
 <br>
 
 haproxy 설정 파일 `/etc/haproxy/haproxy.cfg` 을 수정한다.
+
 <br>
 
 ![HAProxy 모드 변경](/assets/img/2024-03-14/21.png)
+
 <br>
 
 원래 http로 되어있던 부분을 tcp로 변경
+
 <br>
 
 ![HAProxy 웹서버 라운드로빈](/assets/img/2024-03-14/22.png)
+
 <br>
 
 ![HAProxy DB서버 라운드로빈](/assets/img/2024-03-14/23.png)
