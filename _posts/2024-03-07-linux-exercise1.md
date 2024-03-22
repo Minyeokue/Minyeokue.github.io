@@ -1,10 +1,10 @@
 ---
-title: 리눅스 종합문제 1
+title: 리눅스 실습문제 1
 author: minyeokue
 date: 2024-03-07 18:00:00 +0900
 last_modified_at: 2024-03-19 21:02:18 +0900
 categories: [Exercise]
-tags: [Linux]
+tags: [Linux, RAID]
 render_with_liquid: false
 
 toc: true

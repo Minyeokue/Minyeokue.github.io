@@ -1,5 +1,5 @@
 ---
-title: 리눅스 종합문제 2
+title: 리눅스 실습문제 2
 author: minyeokue
 date: 2024-03-14 20:00:00 +0900
 last_modified_at: 2024-03-19 21:34:42 +0900
