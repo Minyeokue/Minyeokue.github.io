@@ -1,5 +1,6 @@
 ---
 title: 리눅스 실습문제 4
+excerpt: "사내 네트워크에 Bastion Host, DNS 서버, DB 서버, 메일 서버, DHCP 서버를 구축하는 실습"
 author: minyeokue
 date: 2024-03-21 16:47:38 +0900
 last_modified_at: 2024-03-22 19:55:47 +0900

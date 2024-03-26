@@ -4,7 +4,7 @@ author: minyeokue
 date: 2024-03-08 18:00:00 +0900
 last_modified_at: 2024-03-19 21:20:54 +0900
 categories: [Linux Class]
-tags: [Linux, Network, Permission]
+tags: [Linux, Network]
 render_with_liquid: false
 
 toc: true
