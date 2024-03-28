@@ -1,10 +1,10 @@
 ---
 title: 네트워크 실습 1
-excerpt: "네트워크 서브네팅 + 라우터 실습"
+excerpt: "네트워크 서브네팅 + 정적 라우팅"
 author: minyeokue
 date: 2024-03-27 22:02:37 +0900
-last_modified_at: 2024-03-28 10:23:58 +0900
-categories: [Network Class]
+last_modified_at: 2024-03-28 17:37:22 +0900
+categories: [Exercies]
 tags: [Network]
 
 toc: true
