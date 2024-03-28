@@ -3,7 +3,7 @@ title: 네트워크 실습 1
 excerpt: "네트워크 서브네팅 + 라우터 실습"
 author: minyeokue
 date: 2024-03-27 22:02:37 +0900
-last_modified_at: 2024-03-27 23:51:24 +0900
+last_modified_at: 2024-03-28 10:23:58 +0900
 categories: [Network Class]
 tags: [Network]
 
@@ -298,7 +298,107 @@ _PC 0 통신 성공_
 
 <br>
 
-추후 이어서 작성하도록 하겠다.
+라우터 0에서 Telnet 접속을 위한 설정을 한 뒤 Router 2에 SSH 설정을 하고, Router 2에 연결된 PC에서 Telnet으로 Router 0에 접근, Router 0에 연결된 PC에서 SSH로 Router 2에 접근하도록 하겠다.
 
 <br>
 
+해당 설정을 해주기 위해서 먼저 hostname을 바꿔야 한다. Router에서 hostname을 변경하기 위해서는 다음처럼 진행한다.
+
+![Hostname 변경](/assets/img/2024-03-27/21.png)
+_Hostname 변경_
+
+<br>
+
+Hostname을 R0로 변경하고, telnet으로 접속할 유저를 minyeokue 암호를 1234로 정한다.
+
+해당 R0에 접속해 enable을 할 때 비밀번호를 gitblog로 정한다.
+
+<br>
+
+![Telnet 로그인 설정 및 라우터 암호 설정](/assets/img/2024-03-27/22.png)
+_Telnet 로그인 설정 및 라우터 암호 설정_
+
+<br>
+
+`line vty 0 4` 명령어는 `vty` 가상터미널을 0부터 4까지 총 5개의 가상터미널을 사용하겠다는 뜻이다.
+
+`login local` 명령어는 ID / PW 검사해서 접속을 시키겠다는 의미이며 그 이후에 나온 username과 password는 Telnet으로 라우터 0에 접속할 때 사용할 ID와 PW이다.
+
+<br>
+
+마지막의 `enable secret` 명령어로 라우터에 관리자 모드를 활성화할 때 비밀번호를 지정하는 명령어인데, 비슷한 명령어로 `enable password`가 있지만, secret과 password의 차이는 암호화의 여부이다.
+
+`show running-config` 명령어를 입력한뒤 엔터로 내리다보면 확인할 수 있을 것이다.
+
+<br>
+
+이제 라우터 0에 연결된 PC에서 Telnet으로 Router에 접속하겠다.
+
+![Telnet 로그인 및 라우터 암호 입력](/assets/img/2024-03-27/23.png)
+_Telnet 로그인 및 라우터 암호 입력_
+
+<br>
+
+---
+
+<br>
+
+라우터 0에 대한 설정을 완료했고 테스트도 진행했으니, 이제 라우터 2에서 SSH 설정을 진행한다.
+
+![SSH 로그인 설정 및 라우터 암호 설정](/assets/img/2024-03-27/24.png)
+_SSH 로그인 설정 및 라우터 암호 설정_
+
+<br>
+
+아까 Telnet 설정과 다른 부분은 `transport input ssh` -> 해당 0 ~ 4의 가상 터미널을 ssh로 접속하겠다는 의미(port 변경)이다.
+
+ssh로 접속하기 위해서 domain-name을 설정해줘야 하고, 해당 도메인네임과 라우터 Hostname을 조합해 rsa 키를 생성할 때의 이름으로 활용한다.
+
+`ip ssh time-out 60` 명령어는 ssh로 접근한 뒤 60초간 입력이 없다면 ssh 로그인을 취소한다는 뜻이며, `ip authentication-retries 3` 명령어는 암호를 입력할 때 틀릴 수 있는 횟수를 3회로 한정했다는 의미이다.
+
+`enable password`는 암호화하지 않고 평문 형태로 저장된다.
+
+<br>
+
+![라우터 암호 설정 후 라우터 2 메모리](/assets/img/2024-03-27/25.png)
+_라우터 암호 설정 후 라우터 2 메모리_
+
+<br>
+
+위의 사진은 `show running-config`를 관리자 모드로 입력했을 때 보여지는 것이다. 강조된 부분은 라우터 암호가 평문형태로 저장된 것을 확인할 수 있다.
+
+<br>
+
+![라우터 암호 설정 후 라우터 0 메모리](/assets/img/2024-03-27/26.png)
+_라우터 암호 설정 후 라우터 0 메모리_
+
+<br>
+
+라우터 2와 달리 라우터 0는 라우터 암호를 설정할 때 `enable secret`으로 저장한 결과이다. 같은 "gitblog"라는 암호를 설정했음에도, 라우터 0에서는 식별이 불가능하다.
+
+<br>
+
+이제 Router 2에 연결된 PC에서 테스트를 진행한다.
+
+![라우터 2 SSH 연결 테스트](/assets/img/2024-03-27/27.png)
+_라우터 2 SSH 연결 테스트_
+
+<br>
+
+성공적으로 연결되었으니, 이제 PC 3(라우터 2와 연결)에서 Telnet으로 라우터 0에 접속하고, PC 0(라우터 0와 연결)에서 SSH로 라우터 2에 접속해보겠다.
+
+먼저 PC 3부터 진행하겠다.
+
+<br>
+
+![PC 3에서 라우터 0로 Telnet 연결](/assets/img/2024-03-27/28.png)
+_PC 3에서 라우터 0로 Telnet 연결_
+
+<br>
+
+성공적으로 연결되었으니, 이제 PC 0에서 SSH로 라우터 2에 접속하겠다.
+
+<br>
+
+![PC 0에서 라우터 2로 SSH 연결](/assets/img/2024-03-27/29.png)
+_PC 0에서 라우터 2로 SSH 연결_
