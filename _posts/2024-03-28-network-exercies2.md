@@ -5,7 +5,7 @@ author: minyeokue
 date: 2024-03-28 13:30:51 +0900
 last_modified_at: 2024-03-31 15:22:00 +0900
 categories: [Exercise]
-tags: [Network, Secure]
+tags: [Network]
 
 toc: true
 toc_sticky: true
