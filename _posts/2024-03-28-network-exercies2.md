@@ -119,6 +119,7 @@ _PC0 웹서버 확인_
 
 
 ```
+
 Switch>en
 Switch#conf t
 Enter configuration commands, one per line.  End with CNTL/Z.
@@ -135,6 +136,7 @@ SW0(config-if-range)#no switchport
 
 SW0(config-if-range)#exit
 SW0(config)#ip routing
+
 ```
 
 <br>
@@ -148,11 +150,13 @@ SW0(config)#ip routing
 라우터에서 게이트웨이를 지정하는데 위의 토폴로지에서는 192.168.10.0/27에 접하고 있는 interface가 fa0/2이기 때문에 다음과 같이 설정한다.
 
 ```
+
 SW0>en
 SW0#conf t
 Enter configuration commands, one per line.  End with CNTL/Z.
 SW0(config)#int fa0/2
 SW0(config-if)#ip addr 192.168.10.30 255.255.255.224
+
 ```
 
 <br>
@@ -161,6 +165,7 @@ SW0(config-if)#ip addr 192.168.10.30 255.255.255.224
 
 
 ```
+
 SW0(config)#int fa0/1
 SW0(config-if)#ip addr 10.10.10.1 255.255.255.0
 SW0(config-if)#exit
@@ -170,6 +175,7 @@ SW0(config-router)#no auto-summary
 SW0(config-router)#network 192.168.10.0
 SW0(config-router)#network 10.10.10.0
 SW0(config-router)#exit
+
 ```
 
 <br>
@@ -183,6 +189,7 @@ SW0(config-router)#exit
 <br>
 
 ```
+
 Switch>
 Switch>en
 Switch#conf t
@@ -204,6 +211,7 @@ SW1(config-if-range)#no switchport
 
 SW1(config-if-range)#exit
 SW1(config)#ip routing
+
 ```
 
 <br>
@@ -213,6 +221,7 @@ SW1(config)#ip routing
 <br>
 
 ```
+
 SW1(config)#int fa0/1
 SW1(config-if)#ip addr 10.10.10.2 255.255.255.0
 SW1(config-if)#int fa0/2
@@ -226,6 +235,7 @@ SW1(config-router)#no auto-summary
 SW1(config-router)#network 10.10.10.0
 SW1(config-router)#network 20.20.20.0
 SW1(config-router)#network 192.168.10.32
+
 ```
 
 <br>
@@ -239,6 +249,7 @@ SW1(config-router)#network 192.168.10.32
 <br>
 
 ```
+
 Switch>en
 Switch#conf t
 Enter configuration commands, one per line.  End with CNTL/Z.
@@ -289,6 +300,7 @@ C       20.20.20.0 is directly connected, FastEthernet0/1
 R       192.168.10.0/27 [120/2] via 20.20.20.1, 00:00:15, FastEthernet0/1
 R       192.168.10.32/28 [120/1] via 20.20.20.1, 00:00:15, FastEthernet0/1
 C       192.168.10.48/29 is directly connected, FastEthernet0/2
+
 ```
 
 <br>
@@ -357,6 +369,7 @@ Ping statistics for 192.168.10.33:
     Packets: Sent = 4, Received = 4, Lost = 0 (0% loss),
 Approximate round trip times in milli-seconds:
     Minimum = 4ms, Maximum = 5ms, Average = 4ms
+
 ```
 
 <br>

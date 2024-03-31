@@ -3,7 +3,7 @@ title: 네트워크 실습 3 - OSPF 라우팅 프로토콜(-> ABR, ASBR)
 excerpt: "네트워크 OSPF 실습 및 영역을 지정해 ABR, ASBR을 설정"
 author: minyeokue
 date: 2024-03-31 15:25:19 +0900
-last_modified_at: 2024-03-31 16:59:34 +0900
+last_modified_at: 2024-03-31 17:16:34 +0900
 categories: [Exercise]
 tags: [Network]
 
@@ -82,6 +82,7 @@ _PC0 IP 설정_
 Router0 설정
 
 ```
+
 Router>en
 Router#configure terminal
 Enter configuration commands, one per line.  End with CNTL/Z.
@@ -114,6 +115,7 @@ R0(config-router)#network 10.10.10.0 0.0.0.255 area 1
 R0(config-router)#network 120.120.120.0 0.0.0.255 area 1
 R0(config-router)#exit
 R0(config)#int lo0
+
 ```
 
 <br>
@@ -121,6 +123,7 @@ R0(config)#int lo0
 Router1 설정
 
 ```
+
 Router>enable
 Router#configure terminal
 Enter configuration commands, one per line.  End with CNTL/Z.
@@ -145,6 +148,7 @@ R1(config)#router ospf 1010
 R1(config-router)#network 10.10.10.0 0.0.0.255 area 1
 R1(config-router)#network 20.20.20.0 0.0.0.255 area 0
 R1(config-router)#end
+
 ```
 
 <br>
@@ -152,6 +156,7 @@ R1(config-router)#end
 Router3 설정
 
 ```
+
 Router>enable
 Router#conf t
 Enter configuration commands, one per line.  End with CNTL/Z.
@@ -182,6 +187,7 @@ R3(config-router)#network 20.20.20.0 0.0.0.255 area 0
 R3(config-router)#network 30.30.30.0 0.0.0.255 area 0
 R3(config-router)#network 100.100.100.0 0.0.0.255 area 0
 R3(config-router)#end
+
 ```
 
 <br>
@@ -189,6 +195,7 @@ R3(config-router)#end
 Router4 설정
 
 ```
+
 Router>enable
 Router#configure terminal
 Enter configuration commands, one per line.  End with CNTL/Z.
@@ -214,6 +221,7 @@ R4(config)#router ospf 1002
 R4(config-router)#network 30.30.30.0 0.0.0.255 area 0
 R4(config-router)#network 40.40.40.0 0.0.0.255 area 2
 R4(config-router)#end
+
 ```
 
 <br>
@@ -221,6 +229,7 @@ R4(config-router)#end
 Router5 설정
 
 ```
+
 Router>enable
 Router#conf t
 Enter configuration commands, one per line.  End with CNTL/Z.
@@ -258,6 +267,7 @@ R5(config-router)#network 130.130.130.0 0.0.0.255 area 2
 R5(config-router)#network 172.16.10.0 0.0.0.255 area 2
 R5(config-router)#network 40.40.40.0 0.0.0.255 area 2
 R5(config-router)#end
+
 ```
 
 <br>
