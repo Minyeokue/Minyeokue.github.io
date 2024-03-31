@@ -118,7 +118,7 @@ _PC0 웹서버 확인_
 <br>
 
 
-```ios
+```
 Switch>en
 Switch#conf t
 Enter configuration commands, one per line.  End with CNTL/Z.
@@ -147,7 +147,7 @@ SW0(config)#ip routing
 
 라우터에서 게이트웨이를 지정하는데 위의 토폴로지에서는 192.168.10.0/27에 접하고 있는 interface가 fa0/2이기 때문에 다음과 같이 설정한다.
 
-```ios
+```
 SW0>en
 SW0#conf t
 Enter configuration commands, one per line.  End with CNTL/Z.
@@ -160,7 +160,7 @@ SW0(config-if)#ip addr 192.168.10.30 255.255.255.224
 스위치는 라우터랑 달리 `no shutdown` 명령어를 입력할 필요 없다.
 
 
-```ios
+```
 SW0(config)#int fa0/1
 SW0(config-if)#ip addr 10.10.10.1 255.255.255.0
 SW0(config-if)#exit
@@ -182,7 +182,7 @@ SW0(config-router)#exit
 
 <br>
 
-```ios
+```
 Switch>
 Switch>en
 Switch#conf t
@@ -212,7 +212,7 @@ SW1(config)#ip routing
 
 <br>
 
-```ios
+```
 SW1(config)#int fa0/1
 SW1(config-if)#ip addr 10.10.10.2 255.255.255.0
 SW1(config-if)#int fa0/2
@@ -238,7 +238,7 @@ SW1(config-router)#network 192.168.10.32
 
 <br>
 
-```ios
+```
 Switch>en
 Switch#conf t
 Enter configuration commands, one per line.  End with CNTL/Z.
@@ -300,7 +300,7 @@ C       192.168.10.48/29 is directly connected, FastEthernet0/2
 PC3에서 ping으로 통신이 가능한지 확인한다.
 
 
-```cmd
+```
 
 Packet Tracer PC Command Line 1.0
 PC>ping 192.168.10.1

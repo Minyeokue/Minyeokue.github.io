@@ -81,7 +81,7 @@ _PC0 IP 설정_
 
 Router0 설정
 
-```ios
+```
 Router>en
 Router#configure terminal
 Enter configuration commands, one per line.  End with CNTL/Z.
@@ -120,7 +120,7 @@ R0(config)#int lo0
 
 Router1 설정
 
-```ios
+```
 Router>enable
 Router#configure terminal
 Enter configuration commands, one per line.  End with CNTL/Z.
@@ -220,7 +220,7 @@ R4(config-router)#end
 
 Router5 설정
 
-```ios
+```
 Router>enable
 Router#conf t
 Enter configuration commands, one per line.  End with CNTL/Z.
@@ -258,7 +258,6 @@ R5(config-router)#network 130.130.130.0 0.0.0.255 area 2
 R5(config-router)#network 172.16.10.0 0.0.0.255 area 2
 R5(config-router)#network 40.40.40.0 0.0.0.255 area 2
 R5(config-router)#end
-
 ```
 
 <br>
