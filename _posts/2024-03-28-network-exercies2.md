@@ -1,9 +1,9 @@
 ---
-title: 네트워크 실습 2
-excerpt: "네트워크 RIP 동적 라우팅 및 토폴로지 구성, "
+title: 네트워크 실습 2 - RIP 라우팅 프로토콜 활용
+excerpt: "네트워크 RIP 동적 라우팅 및 토폴로지 구성"
 author: minyeokue
 date: 2024-03-28 13:30:51 +0900
-last_modified_at: 2024-03-31 15:22:00 +0900
+last_modified_at: 2024-03-31 15:28:55 +0900
 categories: [Exercise]
 tags: [Network]
 

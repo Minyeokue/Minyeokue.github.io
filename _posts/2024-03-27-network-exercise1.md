@@ -1,11 +1,11 @@
 ---
-title: 네트워크 실습 1
+title: 네트워크 실습 1 - 네트워크 서브네팅, 정적 라우팅
 excerpt: "네트워크 서브네팅 + 정적 라우팅"
 author: minyeokue
 date: 2024-03-27 22:02:37 +0900
-last_modified_at: 2024-03-28 17:37:22 +0900
+last_modified_at: 2024-03-31 15:28:47 +0900
 categories: [Exercies]
-tags: [Network]
+tags: [Network, Secure]
 
 toc: true
 toc_sticky: true
