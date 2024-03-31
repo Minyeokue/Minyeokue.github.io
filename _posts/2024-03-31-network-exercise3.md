@@ -3,7 +3,7 @@ title: 네트워크 실습 3 - OSPF 라우팅 프로토콜(-> ABR, ASBR)
 excerpt: "네트워크 OSPF 실습 및 영역을 지정해 ABR, ASBR을 설정"
 author: minyeokue
 date: 2024-03-31 15:25:19 +0900
-last_modified_at: 2024-03-31 15:25:23 +0900
+last_modified_at: 2024-03-31 16:59:34 +0900
 categories: [Exercise]
 tags: [Network]
 
