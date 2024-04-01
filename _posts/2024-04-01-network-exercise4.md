@@ -1,5 +1,5 @@
 ---
-title: 네트워크 실습 2 - RIPv2 OSPF 재분배 및 서브네팅, ACL을 활용한 보안
+title: 네트워크 실습 4 - RIPv2 OSPF 재분배 및 서브네팅, ACL을 활용한 보안
 excerpt: "RIPv2와 OSPF 재분배 및 서브네팅을 진행한 뒤 EACL로 특정 PC 및 서버만 접근 가능하도록 실습한다."
 author: minyeokue
 date: 2024-04-01 17:51:56 +0900
