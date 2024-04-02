@@ -7,6 +7,8 @@ last_modified_at: 2024-04-01 21:45:06 +0900
 categories: [Exercise]
 tags: [Network, Secure]
 
+layout : post
+pin : true
 toc_label : "네트워크 실습"
 toc: true
 toc_sticky: true
