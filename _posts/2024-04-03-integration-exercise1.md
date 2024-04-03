@@ -1,9 +1,9 @@
 ---
 title: 통합 실습 1 - 윈도우 서버(NAT 서버) + 리눅스 서버(HTTP, DNS, FTP) + SSH 접속
-excerpt: ""
+excerpt: "윈도우에 NAT 서버를 구축하고 SNAT, DNAT를 활용해 사설 서버의 서비스에 접근할 수 있도록 한다."
 author: minyeokue
 date: 2024-04-02 21:31:47 +0900
-last_modified_at: 2024-04-03 00:49:13 +0900
+last_modified_at: 2024-04-03 23:02:40 +0900
 categories: [Exercise]
 tags: [Linux, Windows, Firewall, Secure, Network, DNS]
 
