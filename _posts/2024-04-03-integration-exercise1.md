@@ -3,7 +3,7 @@ title: 통합 실습 1 - 윈도우 서버(NAT 서버) + 리눅스 서버(HTTP, D
 excerpt: "윈도우에 NAT 서버를 구축하고 SNAT, DNAT를 활용해 사설 서버의 서비스에 접근할 수 있도록 한다."
 author: minyeokue
 date: 2024-04-02 21:31:47 +0900
-last_modified_at: 2024-04-03 23:02:40 +0900
+last_modified_at: 2024-04-04 10:09:03 +0900
 categories: [Exercise]
 tags: [Linux, Windows, Firewall, Secure, Network, DNS]
 
@@ -498,4 +498,37 @@ _FTP 서버 구동 확인_
 
 <br>
 
-SSH 접근은 내일 작성할 것이다.
+PuTTY로 NAT 서버에 22000번 포트로 접속하면 CentOS의 22번 포트와 연결시켜보겠다.
+
+NAT 서버에서 포트포워딩을 진행한다.
+
+![SSH 포트포워딩](/assets/img/2024-04-03/44.png)
+_SSH 포트포워딩_
+
+<br>
+
+CentOS8에서 SSH로 접속할 때 root 계정으로 접속할 수 없도록 해야하니 수정하도록 한다.
+
+ssh 관련 설정 파일은 `/etc/ssh/sshd_config`{: .filepath }에서 수정한다.
+
+`vim /etc/ssh/sshd_config` 명령어를 입력한다.
+
+![SSH root 계정 로그인 금지](/assets/img/2024-04-03/45.png)
+_SSH root 계정 로그인 금지_
+
+<br>
+
+ssh 관련 설정을 변경했으니 `systemctl restart sshd`를 입력하는 것을 잊지 않아야 한다.
+
+이제 ssh 사용자를 위한 계정을 생성하자.
+
+`useradd sshuser`, `passwd sshuser` 명령어를 연달아 입력해서 생성하고 암호를 지정한다. 암호는 1234로 하겠다.
+
+<br>
+
+이제 PuTTY로 HostOS에서 접속해보자.
+
+![HostOS에서 PuTTY 접속](/assets/img/2024-04-03/46.gif)
+_HostOS에서 PuTTY 접속_
+
+모든 테스트가 완료되었다.
