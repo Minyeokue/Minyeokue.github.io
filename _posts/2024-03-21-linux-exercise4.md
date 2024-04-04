@@ -1,11 +1,11 @@
 ---
 title: 리눅스 실습문제 4
-excerpt: "사내 네트워크에 Bastion Host, DNS 서버, DB 서버, 메일 서버, DHCP 서버를 구축하는 실습"
+excerpt: "사내 네트워크에 Bastion Host, DNS 서버, DB 서버, 메일 서버를 구축하는 실습"
 author: minyeokue
 date: 2024-03-21 16:47:38 +0900
-last_modified_at: 2024-03-22 19:55:47 +0900
+last_modified_at: 2024-04-04 20:22:29 +0900
 categories: [Exercise]
-tags: [Linux, MariaDB, Mail, DNS, DHCP]
+tags: [Linux, MariaDB, Mail, DNS]
 
 toc: true
 toc_sticky: true
@@ -13,7 +13,7 @@ toc_sticky: true
 
 <br>
 
-사내 네트워크에 Bastion Host와, DNS 서버 2대(주 DNS, 보조 DNS), DB 서버와 메일 서버 역할의 리눅스 1대, DHCP 서버 1대를 구축한다.
+사내 네트워크에 Bastion Host와, DNS 서버 2대(주 DNS, 보조 DNS), DB 서버와 메일 서버 역할의 리눅스를 구축한다.
 
 사내 네트워크 안에 2대의 윈도우 클라이언트가 DHCP로부터 자동으로 주소를 받아오고, 메일 서버의 클라이언트로 적용된다.
 
@@ -53,21 +53,11 @@ toc_sticky: true
 
     - GW : 10.10.10.1
 
-- DHCP 서버 -> **Linux01-2**
-
-    - IP : 10.10.10.40/24
-
-    - GW : 10.10.10.1
-
-<br>
-
-- 윈도우 클라이언트 2대
-
 <br>
 
 ---
 
-#### 실습 환경 구축
+### 실습 환경 구축
 
 <br>
 
@@ -75,7 +65,7 @@ toc_sticky: true
 
 <br>
 
-##### Bastion Host(NGW)
+#### Bastion Host(NGW)
 
 <br>
 
@@ -93,7 +83,7 @@ _Bastion Host 사설 GW 랜카드 설정_
 
 <br>
 
-###### 최상단에 있는 시나리오와 같이 `nmtui` 혹은 GUI를 통해 랜카드 설정을 마친 상태라고 생각하고 이후 작업을 진행한다.
+~~최상단에 있는 시나리오와 같이 `nmtui` 혹은 GUI를 통해 랜카드 설정을 마친 상태라고 생각하고 이후 작업을 진행한다.~~
 
 <br>
 
@@ -302,8 +292,7 @@ $TTL 1D
 ns1     A       10.10.10.10
 ns2     A       10.10.10.20
 mail    A       10.10.10.30
-db      A       10.10.10.30
-dhcp    A       10.10.10.40  
+db      A       10.10.10.30 
 ...
 :wq
 ```
@@ -820,14 +809,4 @@ _관리자 이메일 설정2_
 ![관리자 이메일 설정3](/assets/img/2024-03-21/30.png)
 _관리자 이메일 설정3_
 
-<br>
-
-메일 서버 구축을 위한 기본 설정이 끝났다.
-
----
-
-##### DHCP 서버 구축
-
-<br>
-
-곧 진행할 예정..
+이제 메일을 주고 받을 수 있는 상태가 되었다.
