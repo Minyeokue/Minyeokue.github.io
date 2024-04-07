@@ -3,7 +3,7 @@ title: 통합 실습 1 - 윈도우 서버(NAT 서버) + 리눅스 서버(HTTP, D
 excerpt: "윈도우에 NAT 서버를 구축하고 SNAT, DNAT를 활용해 사설 서버의 서비스에 접근할 수 있도록 한다."
 author: minyeokue
 date: 2024-04-03 21:31:47 +0900
-last_modified_at: 2024-04-04 10:09:03 +0900
+last_modified_at: 2024-04-05 08:52:20 +0900
 categories: [Exercise]
 tags: [Linux, Windows, Firewall, Secure, Network, DNS]
 
@@ -498,7 +498,9 @@ _FTP 서버 구동 확인_
 
 <br>
 
-PuTTY로 NAT 서버에 22000번 포트로 접속하면 CentOS의 22번 포트와 연결시켜보겠다.
+PuTTY로 NAT 서버에 22000번 포트로 접속하면 CentOS8의 22번 포트와 연결시켜보겠다.
+
+~~보안적으로는 CentOS8의 포트도 22000번으로 바꾸는 것이 좋다.~~
 
 NAT 서버에서 포트포워딩을 진행한다.
 
