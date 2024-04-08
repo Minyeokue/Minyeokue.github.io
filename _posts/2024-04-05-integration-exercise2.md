@@ -3,7 +3,7 @@ title: 통합 실습 2 - Active Directory, 그룹 정책, Domain Controller 이�
 excerpt: "AD DS를 실습, 그룹 정책, DC 이중화로 내결함성, 원격 데스크톱 및 리눅스 웹 서버와의 연동."
 author: minyeokue
 date: 2024-04-05 08:52:25 +0900
-last_modified_at: 2024-04-08 21:28:13 +0900
+last_modified_at: 2024-04-08 21:30:45 +0900
 categories: [Exercise]
 tags: [Linux, Windows, Firewall, Secure, Network, Policy, Active Directory]
 
@@ -869,6 +869,8 @@ _Active Directory 그룹 정책 설정 완료_
 <br>
 
 #### 그룹 정책 테스트
+
+<br>
 
 IT_Template를 복사해 계정을 생성하도록 하겠다.
 
