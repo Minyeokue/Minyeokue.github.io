@@ -3,7 +3,7 @@ title: 통합 실습 2 - Active Directory, 그룹 정책, Domain Controller 이�
 excerpt: "AD DS를 실습, 그룹 정책, DC 이중화로 내결함성, 원격 데스크톱 및 리눅스 웹 서버와의 연동."
 author: minyeokue
 date: 2024-04-05 08:52:25 +0900
-last_modified_at: 2024-04-08 21:30:45 +0900
+last_modified_at: 2024-04-09 18:14:20 +0900
 categories: [Exercise]
 tags: [Linux, Windows, Firewall, Secure, Network, Policy, Active Directory]
 
@@ -33,7 +33,7 @@ AD DS(Active Directory Domain Service)를 실습하며, 그룹 정책을 적용�
 
 - DC1 복제 Domain Controller -> SVR1  IP : 192.168.1.110
 
-    - [DC-이중화](#DC-이중화), [복제-확인](#복제-확인)
+    - [DC-이중화](#dc-이중화), [복제-확인](#복제-확인), [원격-데스크톱-연결](#원격-데스크톱-연결-테스트)을 35000번 포트를 통해 진행
 
 - 도메인 구성원 -> SVR2  IP : 192.168.1.120
 
@@ -77,7 +77,7 @@ Active Directory에 대해 설명하기 앞서 우선 Microsoft의 네트워크 
 
 <br>
 
-![내 컴퓨터-속성-컴퓨터 이름/도메인 변경 창](/assets/img/2024-04-07/1.png)
+![내 컴퓨터-속성-컴퓨터 이름/도메인 변경 창](/assets/img/2024-04-05/1.png)
 _내 컴퓨터-속성-컴퓨터 이름/도메인 변경 창_
 
 내 컴퓨터 속성에 들어가서 위 그림과 같은 창을 본적이 있을 수 있다. 사진과 같이 MS에서는 WORKGROUP과 DOMAIN이라는 모델을 제공한다. 두 모델의 가장 큰 차이점은 앞서 말한 Directory Database의 위치라고 할 수 있다.
@@ -126,49 +126,49 @@ AD는 MS에서 개발한 Windows 환경에서 사용하기 위한 **LDAP(Lightwe
 
 <br>
 
-![역할 및 기능 추가 1](/assets/img/2024-04-07/2.png)
+![역할 및 기능 추가 1](/assets/img/2024-04-05/2.png)
 _역할 및 기능 추가 1_
 
 관리 탭의 다음 버튼을 눌러서 해당 서버(현재 켜고 있는 시스템)에 역할 및 기능을 추가한다.
 
 *다음* -> *다음* -> *다음*
 
-![역할 및 기능 추가 2](/assets/img/2024-04-07/3.png)
+![역할 및 기능 추가 2](/assets/img/2024-04-05/3.png)
 _역할 및 기능 추가 2_
 
-![역할 및 기능 추가 3](/assets/img/2024-04-07/4.png)
+![역할 및 기능 추가 3](/assets/img/2024-04-05/4.png)
 _역할 및 기능 추가 3_
 
-![역할 및 기능 추가 4](/assets/img/2024-04-07/5.png)
+![역할 및 기능 추가 4](/assets/img/2024-04-05/5.png)
 _역할 및 기능 추가 4_
 
 <br>
 
 Active Directory 도메인 서비스를 활성화 해야 한다. 강조된 부분의 체크박스를 체크한다.
 
-![역할 및 기능 추가 5](/assets/img/2024-04-07/6.png)
+![역할 및 기능 추가 5](/assets/img/2024-04-05/6.png)
 _역할 및 기능 추가 5_
 
 체크하면 다음과 같은 창이 팝업된다. **기능 추가** 버튼을 클릭한다.
 
-![역할 및 기능 추가 6](/assets/img/2024-04-07/7.png)
+![역할 및 기능 추가 6](/assets/img/2024-04-05/7.png)
 _역할 및 기능 추가 6_
 
 <br>
 
 **Domain Service**이기 때문에 DC(Domain Controller)는 DNS 서버의 역할도 함께 가진다. 다음 사진 처럼 체크박스를 체크한다.
 
-![역할 및 기능 추가 7](/assets/img/2024-04-07/8.png)
+![역할 및 기능 추가 7](/assets/img/2024-04-05/8.png)
 _역할 및 기능 추가 7_
 
-![역할 및 기능 추가 8](/assets/img/2024-04-07/9.png)
+![역할 및 기능 추가 8](/assets/img/2024-04-05/9.png)
 _역할 및 기능 추가 8_
 
 <br>
 
 이제 이 시스템(DC1)가 가질 역할을 선정했다.
 
-![역할 및 기능 추가 9](/assets/img/2024-04-07/10.png)
+![역할 및 기능 추가 9](/assets/img/2024-04-05/10.png)
 _역할 및 기능 추가 9_
 
 위와 같은 상태가 되면 **다음** 버튼을 클릭한다.
@@ -177,13 +177,13 @@ _역할 및 기능 추가 9_
 
 *다음* -> *다음* -> *다음*
 
-![역할 및 기능 추가 10](/assets/img/2024-04-07/11.png)
+![역할 및 기능 추가 10](/assets/img/2024-04-05/11.png)
 _역할 및 기능 추가 10_
 
-![역할 및 기능 추가 11](/assets/img/2024-04-07/12.png)
+![역할 및 기능 추가 11](/assets/img/2024-04-05/12.png)
 _역할 및 기능 추가 11_
 
-![역할 및 기능 추가 12](/assets/img/2024-04-07/13.png)
+![역할 및 기능 추가 12](/assets/img/2024-04-05/13.png)
 _역할 및 기능 추가 12_
 
 <br>
@@ -192,12 +192,12 @@ _역할 및 기능 추가 12_
 
 **설치** 버튼을 클릭한다.
 
-![역할 및 기능 설치](/assets/img/2024-04-07/14.png)
+![역할 및 기능 설치](/assets/img/2024-04-05/14.png)
 _역할 및 기능 설치_
 
 <br>
 
-![도메인 컨트롤러 승격](/assets/img/2024-04-07/15.png)
+![도메인 컨트롤러 승격](/assets/img/2024-04-05/15.png)
 _도메인 컨트롤러 승격_
 
 설치가 완료되고 닫기 버튼을 누르면, 위와 같은 알림창에 "배포 후 구성"이라는 알림에 **이 서버를 도메인 컨트롤러로 승격**이 나오게 된다. 해당 하이퍼링크를 클릭한다.
@@ -208,7 +208,7 @@ _도메인 컨트롤러 승격_
 
 그리고 사용하고자하는 Domain 정보를 지정한다.
 
-![새 포리스트 추가](/assets/img/2024-04-07/16.png)
+![새 포리스트 추가](/assets/img/2024-04-05/16.png)
 _새 포리스트 추가_
 
 <br>
@@ -218,14 +218,14 @@ _새 포리스트 추가_
 > 복제하는 경우는 다음의 사진을 따른다. 복제하고자 하는 도메인이 `minyeokue.gitblog`, 해당 도메인을 관장하는 DC의 관리자 계정과 함께 도메인을 입력한다.
 {: prompt-tip }
 
-![if / DC 복제의 경우](/assets/img/2024-04-07/17.png)
+![if / DC 복제의 경우](/assets/img/2024-04-05/17.png)
 _if / DC 복제의 경우_
 
 ---
 
 <br>
 
-![if / 하위 도메인 생성의 경우](/assets/img/2024-04-07/18.png)
+![if / 하위 도메인 생성의 경우](/assets/img/2024-04-05/18.png)
 _if / 하위 도메인 생성의 경우_
 
 새 하위 도메인을 생성하고 싶은 경우, 위와 같이 설정한다.
@@ -244,14 +244,14 @@ _if / 하위 도메인 생성의 경우_
 
 <br>
 
-![도메인 컨트롤러 옵션 1](/assets/img/2024-04-07/19.png)
+![도메인 컨트롤러 옵션 1](/assets/img/2024-04-05/19.png)
 _도메인 컨트롤러 옵션 1_
 
 **다음** 버튼을 클릭한다.
 
 <br>
 
-![도메인 컨트롤러 옵션 2](/assets/img/2024-04-07/20.png)
+![도메인 컨트롤러 옵션 2](/assets/img/2024-04-05/20.png)
 _도메인 컨트롤러 옵션 2_
 
 **다음** 버튼을 클릭한다.
@@ -262,28 +262,28 @@ NetBios 도메인 명을 설정하는 부분이 나온다.
 
 자동으로 대문자로 설정되어 나오는데 **다음** 버튼을 클릭한다.
 
-![도메인 컨트롤러 옵션 3](/assets/img/2024-04-07/21.png)
+![도메인 컨트롤러 옵션 3](/assets/img/2024-04-05/21.png)
 _도메인 컨트롤러 옵션 3_
 
 <br>
 
 AD DS 데이터베이스, 로그 파일 및 SYSVOL의 위치를 설정하는 메뉴가 나오는데, 사실 굉장히 중요한 부분이다. 해당 데이터베이스로 LDAP을 통한 질의, 관련 로그 파일이 작성되는 부분을 정할 수 있기 때문이다.
 
-![도메인 컨트롤러 옵션 4](/assets/img/2024-04-07/22.png)
+![도메인 컨트롤러 옵션 4](/assets/img/2024-04-05/22.png)
 _도메인 컨트롤러 옵션 4_
 
 <br>
 
 이제 지금까지 설정했던 부분을 다시 검토하는 부분이다. **다음** 버튼을 클릭하도록 한다.
 
-![도메인 컨트롤러 옵션 5](/assets/img/2024-04-07/23.png)
+![도메인 컨트롤러 옵션 5](/assets/img/2024-04-05/23.png)
 _도메인 컨트롤러 옵션 5_
 
 <br>
 
 잠시 로딩이 이뤄진 후 **설치** 버튼이 활성화 된다.
 
-![도메인 컨트롤러 옵션 6](/assets/img/2024-04-07/24.png)
+![도메인 컨트롤러 옵션 6](/assets/img/2024-04-05/24.png)
 _도메인 컨트롤러 옵션 6_
 
 **설치** 버튼을 눌러 Active Directory 서비스를 설치한다.
@@ -292,7 +292,7 @@ _도메인 컨트롤러 옵션 6_
 
 설치가 완료되면 다음과 같은 화면이 나타난다.
 
-![설치 완료 1](/assets/img/2024-04-07/25.png)
+![설치 완료 1](/assets/img/2024-04-05/25.png)
 _설치 완료 1_
 
 자동으로 **다시 시작** 과정이 진행되게 된다.
@@ -301,10 +301,10 @@ _설치 완료 1_
 
 재부팅이 완료되면 다음과 같은 상태가 된다. 설정된 비밀번호로 로그인한다.
 
-![설치 완료 2](/assets/img/2024-04-07/26.png)
+![설치 완료 2](/assets/img/2024-04-05/26.png)
 _설치 완료 2_
 
-![설치 완료 3](/assets/img/2024-04-07/27.png)
+![설치 완료 3](/assets/img/2024-04-05/27.png)
 _설치 완료 3_
 
 설치가 완료되고 재부팅이 완료되면 로컬 서버에서 확인했을 때 위와 같은 상태가 된다.
@@ -324,7 +324,7 @@ _설치 완료 3_
 
 이제 SVR1과 SVR2를 AD DS에 가입시켜 보겠다.
 
-![로컬 서버 로그인](/assets/img/2024-04-07/28.png)
+![로컬 서버 로그인](/assets/img/2024-04-05/28.png)
 _로컬 서버 로그인_
 
 <br>
@@ -333,41 +333,41 @@ _로컬 서버 로그인_
 
 내 PC + (오른쪽 마우스 클릭) -> 속성
 
-![도메인 네임 설정 변경 1](/assets/img/2024-04-07/29.png)
+![도메인 네임 설정 변경 1](/assets/img/2024-04-05/29.png)
 _도메인 네임 설정 변경 1_
 
 팝업되는 설정창 스크롤 다운 -> 고급 시스템 설정 -> 컴퓨터 이름 탭 -> 변경 버튼
 
-![도메인 네임 설정 변경 2](/assets/img/2024-04-07/30.png)
+![도메인 네임 설정 변경 2](/assets/img/2024-04-05/30.png)
 _도메인 네임 설정 변경 2_
 
-![도메인 네임 설정 변경 3](/assets/img/2024-04-07/31.png)
+![도메인 네임 설정 변경 3](/assets/img/2024-04-05/31.png)
 _도메인 네임 설정 변경 3_
 
 위와 같이 소속 그룹을 도메인 네임으로 변경한다.
 
 <br>
 
-![도메인 네임 설정 변경 4](/assets/img/2024-04-07/32.png)
+![도메인 네임 설정 변경 4](/assets/img/2024-04-05/32.png)
 _도메인 네임 설정 변경 4_
 
 **UPN 방식**으로 계정을 설정한 뒤 암호를 누른 뒤 **확인** 버튼을 누른다.
 
 <br>
 
-![도메인 네임 설정 완료](/assets/img/2024-04-07/33.png)
+![도메인 네임 설정 완료](/assets/img/2024-04-05/33.png)
 _도메인 네임 설정 완료_
 
 위와 같이 "[설정한 도메인] 도메인 시작" 창이 팝업되었다면 설정이 완료되어 해당 시스템은 DC에 의해 인증받을 수 있다.
 
 <br>
 
-![설정 완료 재부팅 1](/assets/img/2024-04-07/34.png)
+![설정 완료 재부팅 1](/assets/img/2024-04-05/34.png)
 _설정 완료 재부팅_
 
 **확인** -> **닫기** 버튼을 클릭한다.
 
-![설정 완료 재부팅 2](/assets/img/2024-04-07/35.png)
+![설정 완료 재부팅 2](/assets/img/2024-04-05/35.png)
 _설정 완료 재부팅 2_
 
 <br>
@@ -380,14 +380,14 @@ _설정 완료 재부팅 2_
 
 이 때 비슷하게 진행되지만 Window Server라면 약간 다르게 진행할 수 있다.
 
-![도메인 네임 설정 변경 - 서버의 경우 1](/assets/img/2024-04-07/36.png)
+![도메인 네임 설정 변경 - 서버의 경우 1](/assets/img/2024-04-05/36.png)
 _도메인 네임 설정 변경 - 서버의 경우 1_
 
 위의 강조된 부분을 클릭한다.
 
 <br>
 
-![도메인 네임 설정 변경 - 서버의 경우 2](/assets/img/2024-04-07/37.png)
+![도메인 네임 설정 변경 - 서버의 경우 2](/assets/img/2024-04-05/37.png)
 _도메인 네임 설정 변경 - 서버의 경우 2_
 
 소속 그룹을 설정하는 부분부터는 위의 과정과 같다. 모든 설정을 반복하고 재부팅을 완료하자.
@@ -404,56 +404,56 @@ _도메인 네임 설정 변경 - 서버의 경우 2_
 
 SVR1 컴퓨터를 로그인시키고 아래 처럼 관리 탭의 "역할 및 기능 추가" 버튼을 누른다.
 
-![DC 이중화 - 역할 및 기능 추가 1](/assets/img/2024-04-07/38.png)
+![DC 이중화 - 역할 및 기능 추가 1](/assets/img/2024-04-05/38.png)
 _DC 이중화 - 역할 및 기능 추가 1_
 
 <br>
 
 *다음* -> *다음* -> SVR1을 선택한 뒤 **다음** 버튼을 누른다.
 
-![DC 이중화 - 역할 및 기능 추가 2](/assets/img/2024-04-07/39.png)
+![DC 이중화 - 역할 및 기능 추가 2](/assets/img/2024-04-05/39.png)
 _DC 이중화 - 역할 및 기능 추가 2_
 
 <br>
 
 아래 사진 처럼 Active Directory 도메인 서비스와 DNS 서버 체크박스를 체크한 뒤 **다음** 버튼을 누른다.
 
-![DC 이중화 - 역할 및 기능 추가 3](/assets/img/2024-04-07/40.png)
+![DC 이중화 - 역할 및 기능 추가 3](/assets/img/2024-04-05/40.png)
 _DC 이중화 - 역할 및 기능 추가 3_
 
 <br>
 
 이 이후엔 모두 **다음** 버튼을 누른 뒤, **설치** 버튼을 눌러 도메인 컨트롤러로 승격시키기 위한 준비를 마치자.
 
-![DC 이중화 - 역할 및 기능 추가 4](/assets/img/2024-04-07/41.png)
+![DC 이중화 - 역할 및 기능 추가 4](/assets/img/2024-04-05/41.png)
 _DC 이중화 - 역할 및 기능 추가 4_
 
 설치가 완료되면 도메인 컨트롤러로 승격할 수 있도록 강조된 부분을 누른다.
 
 혹은 **닫기** 버튼을 누른 뒤, 알림에 주의 표시가 생겼을 것이다. 거기에서 **이 서버를 도메인 컨트롤러로 승격**을 누른다.
 
-![DC 이중화 - 역할 및 기능 추가 5](/assets/img/2024-04-07/42.png)
+![DC 이중화 - 역할 및 기능 추가 5](/assets/img/2024-04-05/42.png)
 _DC 이중화 - 역할 및 기능 추가 5_
 
 <br>
 
 배포 구성에서 이미 `minyeokue.gitblog`라는 도메인이 존재하고 SVR1을 복제 DC로 만들 것이기 때문에 **기존 도메인에 도메인 컨트롤러를 추가합니다(D).**를 선택한다.
 
-![DC 이중화 - 역할 및 기능 추가 6](/assets/img/2024-04-07/43.png)
+![DC 이중화 - 역할 및 기능 추가 6](/assets/img/2024-04-05/43.png)
 _DC 이중화 - 역할 및 기능 추가 6_
 
 <br>
 
 그리고 이 작업을 수행하기 위한 자격 증명을 제공하는 주체는 SVR1\\Administrator가 아닌 주 도메인 컨트롤러가 되어야 하기 때문에 **변경** 버튼을 누른다.
 
-![DC 이중화 - 역할 및 기능 추가 7](/assets/img/2024-04-07/44.png)
+![DC 이중화 - 역할 및 기능 추가 7](/assets/img/2024-04-05/44.png)
 _DC 이중화 - 역할 및 기능 추가 7_
 
 **확인** 버튼을 누르면 다음과 같은 상태가 된다.
 
 <br>
 
-![DC 이중화 - 역할 및 기능 추가 8](/assets/img/2024-04-07/45.png)
+![DC 이중화 - 역할 및 기능 추가 8](/assets/img/2024-04-05/45.png)
 _DC 이중화 - 역할 및 기능 추가 8_
 
 `Administrator@minyeokue.gitblog`는 UPN 방식이고, NetBIOS 방식으로는 `MINYEOKUE\Administrator`로 입력해도 무방하다.
@@ -464,14 +464,14 @@ _DC 이중화 - 역할 및 기능 추가 8_
 
 <br>
 
-![DC 이중화 - 역할 및 기능 추가 9](/assets/img/2024-04-07/46.png)
+![DC 이중화 - 역할 및 기능 추가 9](/assets/img/2024-04-05/46.png)
 _DC 이중화 - 역할 및 기능 추가 9_
 
 *DNS(Domain Name System) 서버*와 *GC(글로벌 카탈로그)*가 기본 선택되어 있다. 복구하기 위한 암호를 입력하고 **다음** 버튼을 누른다.
 
 <br>
 
-![DC 이중화 - 역할 및 기능 추가 10](/assets/img/2024-04-07/47.png)
+![DC 이중화 - 역할 및 기능 추가 10](/assets/img/2024-04-05/47.png)
 _DC 이중화 - 역할 및 기능 추가 10_
 
 다음에서 복제 드롭다운 메뉴를 누르면 주 DC를 선택할 수 있다.
@@ -480,7 +480,7 @@ _DC 이중화 - 역할 및 기능 추가 10_
 
 <br>
 
-![DC 이중화 - 역할 및 기능 추가 11](/assets/img/2024-04-07/48.png)
+![DC 이중화 - 역할 및 기능 추가 11](/assets/img/2024-04-05/48.png)
 _DC 이중화 - 역할 및 기능 추가 11_
 
 중앙 데이터베이스가 저장되는 파일의 위치를 설정하는 부분이다. 여기서 조작할 설정은 없다. 다만 해당 파일들이 이러한 경로에 저장되는 것을 인지하고 있어야 한다.
@@ -489,14 +489,14 @@ _DC 이중화 - 역할 및 기능 추가 11_
 
 <br>
 
-![DC 이중화 - 역할 및 기능 추가 12](/assets/img/2024-04-07/49.png)
+![DC 이중화 - 역할 및 기능 추가 12](/assets/img/2024-04-05/49.png)
 _DC 이중화 - 역할 및 기능 추가 12_
 
 *검토 옵션* 메뉴에서도 **다음** 버튼을 누른다.
 
 <br>
 
-![DC 이중화 - 역할 및 기능 추가 완료](/assets/img/2024-04-07/50.png)
+![DC 이중화 - 역할 및 기능 추가 완료](/assets/img/2024-04-05/50.png)
 _DC 이중화 - 역할 및 기능 추가 완료_
 
 *필수 구성 요소 확인* 메뉴에서 *모든 필수 구성 요소 검사를 마쳤습니다.*라는 문구가 보인다면 **설치** 버튼을 누른다.
@@ -505,7 +505,7 @@ _DC 이중화 - 역할 및 기능 추가 완료_
 
 <br>
 
-![DC 이중화 - 재부팅](/assets/img/2024-04-07/51.png)
+![DC 이중화 - 재부팅](/assets/img/2024-04-05/51.png)
 _DC 이중화 - 재부팅_
 
 이제 서버를 재부팅하면 DC 복제가 완료된다.
@@ -514,7 +514,7 @@ _DC 이중화 - 재부팅_
 
 재부팅이 완료되면 SVR1의 DNS 설정이 바뀌어 있을 것이다. DNS1는 192.168.1.110, DNS2는 192.168.1.100으로 수정한다.
 
-![DC 이중화 - IP DNS 설정](/assets/img/2024-04-07/52.png)
+![DC 이중화 - IP DNS 설정](/assets/img/2024-04-05/52.png)
 _DC 이중화 - IP DNS 설정_
 
 <br>
@@ -527,7 +527,7 @@ DC1에서 진행하고 SVR1으로 복제되는지 확인하겠다.
 
 먼저 복제가 원활하게 진행되기 위해서 DC1의 DNS 전달자를 SVR1(192.168.1.110)으로 설정하고, SVR1의 DNS 전달자를 DC1(192.168.1.100)로 설정해야 한다.
 
-![DC1 DNS 전달자 설정하기 1](/assets/img/2024-04-07/53.png)
+![DC1 DNS 전달자 설정하기 1](/assets/img/2024-04-05/53.png)
 _DC1 DNS 전달자 설정하기 1_
 
 위 사진처럼 `도구` 탭에서 **DNS 서버**를 선택한다.
@@ -535,33 +535,33 @@ _DC1 DNS 전달자 설정하기 1_
 > 혹은 `Window 키 + R`을 입력해 실행창을 띄운 뒤, 입력창에 `dnsmgmt.msc`를 입력하면 `도구` 탭에서 **DNS 서버** 메뉴를 선택한 것과 같은 효과를 볼 수 있다.
 {: .prompt-tip }
 
-![DC1 DNS 전달자 설정하기 tip](/assets/img/2024-04-07/54.png)
+![DC1 DNS 전달자 설정하기 tip](/assets/img/2024-04-05/54.png)
 _DC1 DNS 전달자 설정하기 tip_
 
 <br>
 
-![DC1 DNS 전달자 설정하기 2](/assets/img/2024-04-07/55.png)
+![DC1 DNS 전달자 설정하기 2](/assets/img/2024-04-05/55.png)
 _DC1 DNS 전달자 설정하기 2_
 
 위 사진 처럼 *DNS 관리자* 창이 나오게 되는데, 이 컴퓨터인 DC1을 마우스 오른쪽 클릭해서 **속성** 메뉴를 선택한다.
 
 <br>
 
-![DC1 DNS 전달자 설정하기 3](/assets/img/2024-04-07/56.png)
+![DC1 DNS 전달자 설정하기 3](/assets/img/2024-04-05/56.png)
 _DC1 DNS 전달자 설정하기 3_
 
 *전달자* 탭을 선택한 뒤, DC1 기준 192.168.1.110 전달자에 존재하지 않으니, **편집** 버튼을 눌러서 추가해주자.
 
 <br>
 
-![DC1 DNS 전달자 설정하기 4](/assets/img/2024-04-07/57.png)
+![DC1 DNS 전달자 설정하기 4](/assets/img/2024-04-05/57.png)
 _DC1 DNS 전달자 설정하기 4_
 
 192.168.1.110을 입력한 뒤, 화면을 클릭하거나 Enter를 누르고, **확인** 버튼을 누른다.
 
 <br>
 
-![DC1 DNS 전달자 설정하기 완료](/assets/img/2024-04-07/58.png)
+![DC1 DNS 전달자 설정하기 완료](/assets/img/2024-04-05/58.png)
 _DC1 DNS 전달자 설정하기 완료_
 
 **확인** 버튼을 누른다.
@@ -578,19 +578,19 @@ SVR1에서 같은 과정을 반복한다.
 
 이제 Domain Controller의 이중화로 실시간 복제가 이루어지는지 확인해보자.
 
-![Active Directory 사용자 및 컴퓨터 1](/assets/img/2024-04-07/59.png)
+![Active Directory 사용자 및 컴퓨터 1](/assets/img/2024-04-05/59.png)
 _Active Directory 사용자 및 컴퓨터 1_
 
 위 사진처럼 *도구* 탭의 **Active Directory 사용자 및 컴퓨터** 메뉴를 선택한다.
 
 <br>
 
-![Active Directory 사용자 및 컴퓨터 2](/assets/img/2024-04-07/60.png)
+![Active Directory 사용자 및 컴퓨터 2](/assets/img/2024-04-05/60.png)
 _Active Directory 사용자 및 컴퓨터 2_
 
 *minyeokue.gitblog*를 선택하면 나오는 목록들 중 먼저 **Computers**를 더블 클릭해보자.
 
-![Active Directory 사용자 및 컴퓨터 3](/assets/img/2024-04-07/61.png)
+![Active Directory 사용자 및 컴퓨터 3](/assets/img/2024-04-05/61.png)
 _Active Directory 사용자 및 컴퓨터 3_
 
 위 사진처럼 도메인 서비스에 가입한 SVR2가 나오게 된다.
@@ -599,12 +599,12 @@ _Active Directory 사용자 및 컴퓨터 3_
 
 <br>
 
-![Active Directory 사용자 및 컴퓨터 4](/assets/img/2024-04-07/62.png)
+![Active Directory 사용자 및 컴퓨터 4](/assets/img/2024-04-05/62.png)
 _Active Directory 사용자 및 컴퓨터 4_
 
 다음은 **Domain Controller**를 더블클릭 해보자.
 
-![Active Directory 사용자 및 컴퓨터 5](/assets/img/2024-04-07/63.png)
+![Active Directory 사용자 및 컴퓨터 5](/assets/img/2024-04-05/63.png)
 _Active Directory 사용자 및 컴퓨터 5_
 
 지금까지 DC가 2개인 것을 확인할 수 있다.
@@ -618,12 +618,12 @@ DC1에서 생성했을 때, 복제되어 SVR1에 추가되는지 확인해보도
 > `조직 구성 단위(OU)`란 Organization Unit의 약자로, Window Server의 강력한 보안 적용 방법인 **그룹 정책**을 적용할 수 있는 최소 단위이다.
 {: .prompt-info }
 
-![Active Directory 사용자 및 컴퓨터 6](/assets/img/2024-04-07/64.png)
+![Active Directory 사용자 및 컴퓨터 6](/assets/img/2024-04-05/64.png)
 _Active Directory 사용자 및 컴퓨터 6_
 
 <br>
 
-![Active Directory 조직 구성 단위 추가](/assets/img/2024-04-07/65.png)
+![Active Directory 조직 구성 단위 추가](/assets/img/2024-04-05/65.png)
 _Active Directory 조직 구성 단위 추가_
 
 위 사진처럼 이름에 "IT"라고 추가한 뒤, 확인을 누른다.
@@ -632,19 +632,19 @@ _Active Directory 조직 구성 단위 추가_
 
 혹시 삭제가 필요하다면, 다음의 과정을 따르도록 한다.
 
-![Active Directory 조직 구성 단위 삭제 1](/assets/img/2024-04-07/66.png)
+![Active Directory 조직 구성 단위 삭제 1](/assets/img/2024-04-05/66.png)
 _Active Directory 조직 구성 단위 삭제 1_
 
 먼저 **고급 기능**을 활성화한다.
 
-![Active Directory 조직 구성 단위 삭제 2](/assets/img/2024-04-07/67.png)
+![Active Directory 조직 구성 단위 삭제 2](/assets/img/2024-04-05/67.png)
 _Active Directory 조직 구성 단위 삭제 2_
 
 그 이후 숨겨진 그룹, 기능들을 조작할 수 있게 되는데, 삭제하려는 그룹 혹은 단위를 마우스 오른쪽 클릭 -> **속성** 메뉴를 선택한다.
 
 <br>
 
-![Active Directory 조직 구성 단위 삭제 3](/assets/img/2024-04-07/68.png)
+![Active Directory 조직 구성 단위 삭제 3](/assets/img/2024-04-05/68.png)
 _Active Directory 조직 구성 단위 삭제 3_
 
 *개체* 탭에서 `실수로 삭제되지 않도록 개체 보호` 옵션의 체크를 해제한 뒤, **확인** 혹은 **적용** 버튼을 누른다.
@@ -662,19 +662,19 @@ _Active Directory 조직 구성 단위 삭제 3_
 
 IT 부서에 사용자 템플릿을 만들어, 템플릿으로 여러 유저를 복제해서 생성해보겠다.
 
-![Active Directory 사용자 추가 1](/assets/img/2024-04-07/69.png)
+![Active Directory 사용자 추가 1](/assets/img/2024-04-05/69.png)
 _Active Directory 사용자 추가 1_
 
 위 사진처럼 *새로 만들기* 메뉴 -> **사용자** 메뉴를 선택.
 
 <br>
 
-![Active Directory 사용자 추가 2](/assets/img/2024-04-07/70.png)
+![Active Directory 사용자 추가 2](/assets/img/2024-04-05/70.png)
 _Active Directory 사용자 추가 2_
 
 밑줄 친 부분을 작성하면 그 아래 줄도 자동으로 완성된다. **다음** 버튼을 누른다.
 
-![Active Directory 사용자 추가 3](/assets/img/2024-04-07/71.png)
+![Active Directory 사용자 추가 3](/assets/img/2024-04-05/71.png)
 _Active Directory 사용자 추가 3_
 
 `암호의 복잡성`을 만족하는 사용자 비밀번호를 입력한 뒤, **다음 로그온 시 사용자가 반드시 암호를 변경해야 함** 옵션을 체크 해제한 뒤 **다음** 버튼을 누른다.
@@ -684,14 +684,14 @@ _Active Directory 사용자 추가 3_
 
 <br>
 
-![Active Directory 사용자 추가 완료](/assets/img/2024-04-07/72.png)
+![Active Directory 사용자 추가 완료](/assets/img/2024-04-05/72.png)
 _Active Directory 사용자 추가 완료_
 
 **마침** 버튼을 눌러서 사용자 생성을 완료하도록 한다. 그럼 이제 SVR1에 복제되어 생성되는지 확인한다.
 
 <br>
 
-![Active Directory 사용자 복제 생성 확인](/assets/img/2024-04-07/73.gif)
+![Active Directory 사용자 복제 생성 확인](/assets/img/2024-04-05/73.gif)
 _Active Directory 사용자 복제 생성 확인_
 
 정상적으로 복제되었다.
@@ -710,12 +710,12 @@ _Active Directory 사용자 복제 생성 확인_
 
 IT_Template 사용자를 더블클릭 한다.
 
-![Active Directory 사용자 로그온 시간 설정 1](/assets/img/2024-04-07/74.png)
+![Active Directory 사용자 로그온 시간 설정 1](/assets/img/2024-04-05/74.png)
 _Active Directory 사용자 로그온 시간 설정 1_
 
 IT 부서의 사용자들의 로그온 시간을 조절해보겠다.
 
-![Active Directory 사용자 로그온 시간 설정 2](/assets/img/2024-04-07/75.png)
+![Active Directory 사용자 로그온 시간 설정 2](/assets/img/2024-04-05/75.png)
 _Active Directory 사용자 로그온 시간 설정 2_
 
 위 사진처럼 조절하게 되면 IT_Template에서 복제되어 생성된 사용자들은 *월요일부터 금요일까지 오전 9시부터 오후 9시까지만 로그온이 가능*하다.
@@ -724,7 +724,7 @@ _Active Directory 사용자 로그온 시간 설정 2_
 
 잠시 SVR2로 로그인하여 확인해보겠다. SVR2는 도메인 가입이 완료된 상태이다.
 
-![Active Directory 사용자 로그온 테스트 1](/assets/img/2024-04-07/76.gif)
+![Active Directory 사용자 로그온 테스트 1](/assets/img/2024-04-05/76.gif)
 _Active Directory 사용자 로그온 테스트 1_
 
 오후 9시까지 로그온이 가능하기 때문에 정상적으로 로그인 되었다.
@@ -733,12 +733,12 @@ _Active Directory 사용자 로그온 테스트 1_
 
 이제 시간을 줄여서 다시 시도해보겠다.
 
-![Active Directory 사용자 로그온 테스트 2](/assets/img/2024-04-07/77.png)
+![Active Directory 사용자 로그온 테스트 2](/assets/img/2024-04-05/77.png)
 _Active Directory 사용자 로그온 테스트 2_
 
 **확인** 및 **적용** 버튼을 누른 뒤 나온다. 다시 로그온하는 테스트를 진행한다.
 
-![Active Directory 사용자 로그온 테스트 3](/assets/img/2024-04-07/78.gif)
+![Active Directory 사용자 로그온 테스트 3](/assets/img/2024-04-05/78.gif)
 _Active Directory 사용자 로그온 테스트 3_
 
 오후 8시 12분에 진행한 테스트는 사용 계정 시간 제한으로 로그인할 수 없다고 나오게 된다.
@@ -747,12 +747,12 @@ _Active Directory 사용자 로그온 테스트 3_
 
 로그온 할 수 있는 컴퓨터를 지정해보록 하자. 다시 IT_Template 계정을 더블 클릭해서 *계정* 탭으로 돌아온다.
 
-![Active Directory 사용자 로그온 대상 설정 1](/assets/img/2024-04-07/79.png)
+![Active Directory 사용자 로그온 대상 설정 1](/assets/img/2024-04-05/79.png)
 _Active Directory 사용자 로그온 대상 설정 1_
 
 **로그온 대상** 버튼을 누른다.
 
-![Active Directory 사용자 로그온 대상 설정 2](/assets/img/2024-04-07/80.png)
+![Active Directory 사용자 로그온 대상 설정 2](/assets/img/2024-04-05/80.png)
 _Active Directory 사용자 로그온 대상 설정 2_
 
 SVR1을 입력하고 **추가** -> **확인** 버튼을 누른다.
@@ -761,7 +761,7 @@ SVR1을 입력하고 **추가** -> **확인** 버튼을 누른다.
 
 <br>
 
-![Active Directory 사용자 로그온 대상 테스트](/assets/img/2024-04-07/81.gif)
+![Active Directory 사용자 로그온 대상 테스트](/assets/img/2024-04-05/81.gif)
 _Active Directory 사용자 로그온 대상 테스트_
 
 *이 PC를 사용할 수 없도록 사용자 계정이 구성되어 있습니다*라는 문구와 함께 로그인할 수 없다.
@@ -776,7 +776,7 @@ _Active Directory 사용자 로그온 대상 테스트_
 
 <br>
 
-![Active Directory 그룹 정책 설정 1](/assets/img/2024-04-07/82.png)
+![Active Directory 그룹 정책 설정 1](/assets/img/2024-04-05/82.png)
 _Active Directory 그룹 정책 설정 1_
 
 *도구* -> **그룹 정책 관리** 메뉴를 선택한다.
@@ -785,7 +785,7 @@ _Active Directory 그룹 정책 설정 1_
 
 *그룹 정책 관리* 창에서 **포리스트** 확장 -> **도메인** 확장 -> **minyeokue.gitblog** 확장 -> **Default Domain Policy** 우측 마우스 클릭 -> **편집** 메뉴를 선택한다. 그러면 *그룹 정책 관리 편집기* 창이 뜨게 된다.
 
-![Active Directory 그룹 정책 설정 2](/assets/img/2024-04-07/83.png)
+![Active Directory 그룹 정책 설정 2](/assets/img/2024-04-05/83.png)
 _Active Directory 그룹 정책 설정 2_
 
 > 혹은 `Window 키 + R` 단축키로 실행 창을 띄운 뒤, 입력창에 `gpmc.msc`를 입력하면 *그룹 정책 관리* 창으로 바로 갈 수 있다.
@@ -801,7 +801,7 @@ _Active Directory 그룹 정책 설정 2_
 
 <br>
 
-![Active Directory 그룹 정책 설정 3](/assets/img/2024-04-07/84.png)
+![Active Directory 그룹 정책 설정 3](/assets/img/2024-04-05/84.png)
 _Active Directory 그룹 정책 설정 3_
 
 *컴퓨터 구성* 메뉴의 **Windows 설정** -> *보안 설정* 확장 -> *계정 정책* 확장 -> **암호 정책** 메뉴를 선택하면 우리가 수정해야 하는 로컬 그룹 정책들이 나오게 된다.
@@ -810,18 +810,18 @@ _Active Directory 그룹 정책 설정 3_
 
 위의 정책들을 적용시킨다.
 
-![Active Directory 그룹 정책 설정 4](/assets/img/2024-04-07/85.png)
+![Active Directory 그룹 정책 설정 4](/assets/img/2024-04-05/85.png)
 _Active Directory 그룹 정책 설정 4_
 
-![Active Directory 그룹 정책 설정 5](/assets/img/2024-04-07/86.png)
+![Active Directory 그룹 정책 설정 5](/assets/img/2024-04-05/86.png)
 _Active Directory 그룹 정책 설정 5_
 
-![Active Directory 그룹 정책 설정 6](/assets/img/2024-04-07/87.png)
+![Active Directory 그룹 정책 설정 6](/assets/img/2024-04-05/87.png)
 _Active Directory 그룹 정책 설정 6_
 
 <br>
 
-![Active Directory 그룹 정책 설정 7](/assets/img/2024-04-07/88.png)
+![Active Directory 그룹 정책 설정 7](/assets/img/2024-04-05/88.png)
 _Active Directory 그룹 정책 설정 7_
 
 *암호 정책*은 설정이 완료되었다.
@@ -830,19 +830,19 @@ _Active Directory 그룹 정책 설정 7_
 
 <br>
 
-![Active Directory 그룹 정책 설정 8](/assets/img/2024-04-07/89.png)
+![Active Directory 그룹 정책 설정 8](/assets/img/2024-04-05/89.png)
 _Active Directory 그룹 정책 설정 8_
 
 해당 설정을 변경한다.
 
-![Active Directory 그룹 정책 설정 9](/assets/img/2024-04-07/90.png)
+![Active Directory 그룹 정책 설정 9](/assets/img/2024-04-05/90.png)
 _Active Directory 그룹 정책 설정 9_
 
 **확인** 버튼을 누르게 되면 다음 사진의 창이 자동으로 뜨게 된다.
 
 <br>
 
-![Active Directory 그룹 정책 설정 10](/assets/img/2024-04-07/91.png)
+![Active Directory 그룹 정책 설정 10](/assets/img/2024-04-05/91.png)
 _Active Directory 그룹 정책 설정 10_
 
 키보드의 *Enter*를 누른다.
@@ -857,7 +857,7 @@ Window 키 + R을 입력해 실행창을 띄워 `cmd`를 입력한다.
 
 잠시 기다리면 정책 업데이트를 진행한다.
 
-![Active Directory 그룹 정책 설정 완료](/assets/img/2024-04-07/92.png)
+![Active Directory 그룹 정책 설정 완료](/assets/img/2024-04-05/92.png)
 _Active Directory 그룹 정책 설정 완료_
 
 <br>
@@ -876,17 +876,17 @@ IT_Template를 복사해 계정을 생성하도록 하겠다.
 
 다만, 로그온 대상과 로그온 시간을 조정할 필요는 있어보인다.
 
-![Active Directory 변경된 그룹 정책 테스트 1](/assets/img/2024-04-07/93.png)
+![Active Directory 변경된 그룹 정책 테스트 1](/assets/img/2024-04-05/93.png)
 _Active Directory 변경된 그룹 정책 테스트 1_
 
 <br>
 
 `it_test`라는 계정을 생성한다. 암호는 '1234'로 하겠다.
 
-![Active Directory 변경된 그룹 정책 테스트 2](/assets/img/2024-04-07/94.png)
+![Active Directory 변경된 그룹 정책 테스트 2](/assets/img/2024-04-05/94.png)
 _Active Directory 변경된 그룹 정책 테스트 2_
 
-![Active Directory 변경된 그룹 정책 테스트 3](/assets/img/2024-04-07/95.png)
+![Active Directory 변경된 그룹 정책 테스트 3](/assets/img/2024-04-05/95.png)
 _Active Directory 변경된 그룹 정책 테스트 3_
 
 **다음** -> **마침** 버튼을 누른다.
@@ -895,12 +895,12 @@ _Active Directory 변경된 그룹 정책 테스트 3_
 
 <br>
 
-![Active Directory 변경된 그룹 정책 테스트 4](/assets/img/2024-04-07/96.png)
+![Active Directory 변경된 그룹 정책 테스트 4](/assets/img/2024-04-05/96.png)
 _Active Directory 변경된 그룹 정책 테스트 4_
 
 로그온 시간을 변경하였다.
 
-![Active Directory 변경된 그룹 정책 테스트 5](/assets/img/2024-04-07/97.png)
+![Active Directory 변경된 그룹 정책 테스트 5](/assets/img/2024-04-05/97.png)
 _Active Directory 변경된 그룹 정책 테스트 5_
 
 로그온 대상을 변경한 뒤 **적용** 및 **확인** 버튼을 누른다.
@@ -911,14 +911,14 @@ SVR2에서 확인해보자.
 
 먼저 3번의 로그온 시도 이후 잠금이 되는 것을 확인한다.
 
-![Active Directory 변경된 그룹 정책 테스트 6](/assets/img/2024-04-07/98.gif)
+![Active Directory 변경된 그룹 정책 테스트 6](/assets/img/2024-04-05/98.gif)
 _Active Directory 변경된 그룹 정책 테스트 6_
 
 이제 계정이 잠금되었다. 복제 DC인 SVR1에서 계정의 잠금을 해제한다.
 
 <br>
 
-![Active Directory 변경된 그룹 정책 테스트 7](/assets/img/2024-04-07/99.png)
+![Active Directory 변경된 그룹 정책 테스트 7](/assets/img/2024-04-05/99.png)
 _Active Directory 변경된 그룹 정책 테스트 7_
 
 강조된 계정 잠금 해제 체크박스를 선택한 뒤, **적용** 및 **확인** 버튼을 누른다.
@@ -927,7 +927,7 @@ _Active Directory 변경된 그룹 정책 테스트 7_
 
 테스트를 진행한다.
 
-![Active Directory 변경된 그룹 정책 테스트 8](/assets/img/2024-04-07/100.gif)
+![Active Directory 변경된 그룹 정책 테스트 8](/assets/img/2024-04-05/100.gif)
 _Active Directory 변경된 그룹 정책 테스트 8_
 
 정상적으로 로그인 되었다.
@@ -942,7 +942,38 @@ _Active Directory 변경된 그룹 정책 테스트 8_
 
 <br>
 
-내일 이어서 작성한다.
+DC1에 원격 데스크톱 연결을 할 수 있도록 설정한다.
+
+원격 데스크톱 연결의 포트는 3389번이지만, 이것을 35000번으로 바꾼다.
+
+먼저 원격 데스크톱 기능을 활성화하도록 한다.
+
+![원격 데스크톱 연결 활성화 1](/assets/img/2024-04-05/101.png)
+_원격 데스크톱 연결 활성화 1_
+
+해당 앱을 선택한다.
+
+![원격 데스크톱 연결 활성화 2](/assets/img/2024-04-05/102.png)
+_원격 데스크톱 연결 활성화 2_
+
+현재 원격 데스크톱이 비활성화된 상태이다. 강조된 부분을 클릭해 활성화해준다.
+
+![원격 데스크톱 연결 활성화 3](/assets/img/2024-04-05/103.png)
+_원격 데스크톱 연결 활성화 3_
+
+창이 하나 팝업되는데 **확인** 버튼을 눌러준다.
+
+![원격 데스크톱 연결 활성화 완료](/assets/img/2024-04-05/104.png)
+_원격 데스크톱 연결 활성화 완료_
+
+이제 외부에서 원격 데스크톱 연결이 가능한 상태가 되었다.
+
+<br>
+
+![원격 데스크톱 연결 포트 확인](/assets/img/2024-04-05/105.png)
+_원격 데스크톱 연결 포트 확인_
+
+현재 3389번 포트의 연결이 들어오면 원격 데스크톱을 활성화할 수 있도록 설정된 상태이다. 테스트를 진행한다.
 
 <br>
 
@@ -950,4 +981,219 @@ _Active Directory 변경된 그룹 정책 테스트 8_
 
 <br>
 
-내일 이어서 작성한다.
+SVR1에서 테스트를 진행하도록 한다.
+
+![원격 데스크톱 연결 테스트](/assets/img/2024-04-05/106.gif)
+_원격 데스크톱 연결 테스트_
+
+정상적으로 연결이 완료되었다.
+
+이제 포트번호를 35000으로 바꾸도록 한다.
+
+<br>
+
+#### 원격 데스크톱 포트 번호 변경
+
+<br>
+
+Window 실행창을 Window 키 + R로 실행시켜 `regedit`을 입력한다.
+
+![레지스트리 편집기 1](/assets/img/2024-04-05/107.png)
+_레지스트리 편집기 1_
+
+여기에서 'Ctrl + F' 키를 입력해 찾기 창을 띄운다.
+
+![레지스트리 편집기 2](/assets/img/2024-04-05/108.png)
+_레지스트리 편집기 2_
+
+`PortNumber`를 입력하고 **다음 찾기**를 누른다. 약간 시간이 걸릴 것이다.
+
+<br>
+
+![레지스트리 편집기 3](/assets/img/2024-04-05/109.gif)
+_레지스트리 편집기 3_
+
+찾기가 진행된 상태에서 `F3` 키를 누르면 다음 찾기로 진행된다.
+
+`컴퓨터\HKEY_LOCAL_MACHINE\SYSTEM\ControlSet001\Control\Terminal Server\WinStations\RDP-Tcp`{: .filepath }라는 굉장히 찾기 어려운 경로에 존재하고 있다.
+
+위 사진처럼 10진수로 바꿔서 3389를 35000으로 변경한다.
+
+<br>
+
+![원격 데스크톱 포트 번호 변경 완료](/assets/img/2024-04-05/110.png)
+_원격 데스크톱 포트 번호 변경 완료_
+
+3389의 결과를 찾았을 때는 없고, 35000 포트 번호가 신호 대기중이라는 사실을 확인했다.
+
+<br>
+
+#### 원격 데스크톱 연결 방화벽 설정
+
+<br>
+
+외부에서 접근할 때도 35000번으로 들어올 수 있도록 방화벽 인바운드 규칙을 설정한다.
+
+![원격 데스크톱 Windows Defender 방화벽 위치](/assets/img/2024-04-05/111.png)
+_원격 데스크톱 Windows Defender 방화벽 위치_
+
+서버 관리자의 방화벽으로 들어갈 수 있는 위치이다.
+
+<br>
+
+![원격 데스크톱 Windows Defender 방화벽 인바운드 규칙 1](/assets/img/2024-04-05/112.png)
+_원격 데스크톱 Windows Defender 방화벽 인바운드 규칙 1_
+
+위 사진처럼 *인바운드 규칙*에서 오른쪽 마우스 클릭으로 **새 규칙** 메뉴를 선택한다.
+
+<br>
+
+![원격 데스크톱 Windows Defender 방화벽 인바운드 규칙 2](/assets/img/2024-04-05/113.png)
+_원격 데스크톱 Windows Defender 방화벽 인바운드 규칙 2_
+
+특정 포트를 지정하는 것이기 때문에, 위 사진처럼 라디오버튼을 체크한 뒤 **다음** 버튼을 누른다.
+
+<br>
+
+원격 데스크톱 연결은 TCP 프로토콜을 통해서 연결된다.
+
+![원격 데스크톱 Windows Defender 방화벽 인바운드 규칙 3](/assets/img/2024-04-05/114.png)
+_원격 데스크톱 Windows Defender 방화벽 인바운드 규칙 3_
+
+<br>
+
+![원격 데스크톱 Windows Defender 방화벽 인바운드 규칙 3](/assets/img/2024-04-05/115.png)
+_원격 데스크톱 Windows Defender 방화벽 인바운드 규칙 3_
+
+35000번 포트로 들어오는 신호를 허용할 것이기 때문에, 위 사진처럼 *연결 허용*을 체크하고 **다음** 버튼을 누른다.
+
+<br>
+
+![원격 데스크톱 Windows Defender 방화벽 인바운드 규칙 4](/assets/img/2024-04-05/116.png)
+_원격 데스크톱 Windows Defender 방화벽 인바운드 규칙 4_
+
+위 사진처럼 **다음** 버튼을 누른다.
+
+<br>
+
+![원격 데스크톱 Windows Defender 방화벽 인바운드 규칙 설정 완료](/assets/img/2024-04-05/117.png)
+_원격 데스크톱 Windows Defender 방화벽 인바운드 규칙 설정 완료_
+
+인바운드 규칙이 정렬되는 목록에 어떤 제목으로 표현될지 적는 부분이다. 위 사진처럼 설정한 뒤 **마침** 버튼을 누른다.
+
+이제 인바운드 규칙 맨 위 목록에 "원격 데스크톱 연결"이라는 우리가 생성한 규칙이 생겼을 것이다.
+
+시나리오 상 원격 데스크톱 연결을 위한 모든 설정이 완료되었으니 테스트를 진행한다.
+
+<br>
+
+#### 원격 데스크톱 연결 테스트
+
+<br>
+
+![원격 데스크톱 연결 테스트](/assets/img/2024-04-05/118.gif)
+_원격 데스크톱 연결 테스트_
+
+정상적으로 진행되었다. 같은 세션으로의 로그인이 허가되지 않기 때문에 원래 연결되고 있었던 VMware에서 로그아웃되고 원격 데스크톱 연결이 세션을 차지한다.
+
+<br>
+
+---
+
+<br>
+
+### 리눅스 웹 서버 가상 호스트
+
+<br>
+
+CentOS8에 웹 서버 패키지를 설정하고, 가상호스트 www1.minyeokue.gitblog, www2.minyeokue.gitblog에 접속해보자.
+
+![리눅스 IP 설정](/assets/img/2024-04-05/119.png)
+_리눅스 IP 설정_
+
+먼저 위 사진처럼 IP를 설정한다. DNS 서버를 DC1으로 설정한 뒤 랜카드를 활성화하기 위해 `nmcli con up ens160` 명령어를 입력한다. 자신의 CentOS 환경의 랜카드 이름을 입력한다.
+
+<br>
+
+![외부 인터넷과의 통신 확인](/assets/img/2024-04-05/120.gif)
+_외부 인터넷과의 통신 확인_
+
+패키지를 설치할 수 있는지 확인하기 위해 외부 인터넷과의 통신을 확인했다.
+
+`yum -y install httpd` 명령어를 입력해 웹 서버 패키지를 설치한다.
+
+<br>
+
+설치가 완료되면, 리눅스 최상위 디렉토리 "/"를 웹 서버가 접근할 수 있도록 설정 파일을 수정해 권한을 부여한다.
+
+`/www1/index.html`{: .filepath }를 만들고, `/www2/start.html`{: .filepath }를 만들도록 하자.
+
+먼저 `/www1`{: .filepath }, `/www2`{: .filepath } 디렉토리를 생성하도록 한다.
+
+<br>
+
+![디렉토리 생성 및 html 파일 생성](/assets/img/2024-04-05/121.png)
+_디렉토리 생성 및 html 파일 생성_
+
+`mkdir /www1 /www2` 명령어를 입력해 2개의 디렉토리를 생성한다.
+
+리디렉션을 통해  `echo "www1 site"`, `echo "www2 site"`의 출력을 `/www1/index.html`{: .filepath }, `/www2/start.html`{: .filepath }의 입력으로 전환한다.
+
+<br>
+
+이제 Apache 웹 서버의 설정 파일 `/etc/httpd/conf/httpd.conf`{: .filepath }을 수정한다.
+
+![Apache 웹 서버 루트 디렉토리 권한 부여](/assets/img/2024-04-05/122.png)
+_Apache 웹 서버 루트 디렉토리 권한 부여_
+
+![Apache 웹 서버 기본 문서 추가](/assets/img/2024-04-05/123.png)
+_Apache 웹 서버 기본 문서 추가_
+
+![Apache 웹 서버 기본 문서 추가](/assets/img/2024-04-05/123.png)
+_Apache 웹 서버 기본 문서 추가_
+
+![Apache 웹 서버 가상 호스트](/assets/img/2024-04-05/124.png)
+_Apache 웹 서버 가상 호스트_
+
+설정 파일의 수정은 이것으로 끝이다. 이제 웹 서버를 가동시키기 위해 `systemctl enable --now httpd` 명령어를 입력해 리부팅해도 자동으로 웹 서버가 시작되도록 한다.
+
+> 리눅스에서 설정 변경을 진행하면 `systemctl restart [서비스명]`을 진행해줘야 적용된다.
+{: .prompt-info}
+
+<br>
+
+이제 DC1의 DNS에서 작업을 이어간다.
+
+가상 호스트인 www1, www2를 DNS에서 호스트 추가를 진행한다.
+
+![DNS 관리자 위치](/assets/img/2024-04-05/125.png)
+_DNS 관리자 위치_
+
+위 사진처럼 *도구* 탭에서 **DNS 관리자** 메뉴를 선택하는 방법과, 실행창에서 `dnsmgmt.msc` 명령어를 입력하는 방법이 있다.
+
+<br>
+
+![DNS 관리자 minyeokue.gitblog 정방향 영역](/assets/img/2024-04-05/126.png)
+_DNS 관리자 minyeokue.gitblog 정방향 영역_
+
+![DNS 관리자 minyeokue.gitblog 호스트 추가](/assets/img/2024-04-05/127.png)
+_DNS 관리자 minyeokue.gitblog 호스트 추가_
+
+위 사진처럼 호스트를 추가하고, www2도 같은 IP에 추가하도록 한다.
+
+웹 서버 가상 호스트를 DNS에 추가했으니, SVR2에서 확인할 때 도메인 이름으로 웹 서버 접근이 가능할 것이다.
+
+<br>
+
+---
+
+<br>
+
+#### 리눅스 웹 서버 가상 호스트 테스트
+
+<br>
+
+![리눅스 웹 서버 가상 호스트 테스트 완료](/assets/img/2024-04-05/127.gif)
+_리눅스 웹 서버 가상 호스트 테스트 완료_
+
+가상 호스트를 DC1에 DNS 쿼리를 통해 접근하는 것이 성공적으로 이루어졌다.
