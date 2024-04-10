@@ -3,7 +3,7 @@ title: 통합 실습 3 - NAT 포트포워딩을 통한 MariaDB, DNS, IIS, FTP �
 excerpt: "윈도우 2003 서버에서 NAT 포트포워딩을 진행해 사설망 안의 MariaDB, DNS, IIS, FTP 서버들에 접속하고 원격 데스크톱으로 연결한다."
 author: minyeokue
 date: 2024-04-09 19:08:51 +0900
-last_modified_at: 2024-04-10 21:58:16 +0900
+last_modified_at: 2024-04-11 08:48:45 +0900
 categories: [Exercise]
 tags: [Linux, Windows, Firewall, MariaDB, Secure, Network, DNS]
 
@@ -389,11 +389,14 @@ _역할 및 기능 추가 마법사 7_
 ![역할 및 기능 추가 마법사 완료](/assets/img/2024-04-09/35.png)
 _역할 및 기능 추가 마법사 완료_
 
+> Window + R 키로 *실행* 창을 호출한 뒤 `inetmgr` 명령어를 입력하면 *IIS 관리자* 창을 실행할 수 있다.
+{: .prompt-info }
+
 이제 DC1은 IIS 서버와 FTP 서버의 역할을 수행할 수 있다.
 
 <br>
 
-이제 파일 탐색기를 실행시킨다.
+FTP 서버에 대한 설정을 시작한다. 파일 탐색기를 실행시킨다.
 
 ![웹 서버 기본 경로](/assets/img/2024-04-09/36.png)
 _웹 서버 기본 경로_
