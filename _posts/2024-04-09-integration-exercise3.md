@@ -63,9 +63,9 @@ toc_sticky: true
 
         - FTP 서버 홈 디렉토리 : C:\ftpdata
 
-        - blogAdmin 사용자 생성 => FTP 서버 읽기, 쓰기 권한 부여
+        - minyeokue 사용자 생성 => FTP 서버 읽기, 쓰기 권한 부여
 
-        - bloguser 사용자 생성 => FTP 서버 읽기 권한 부여
+        - gitblog 사용자 생성 => FTP 서버 읽기 권한 부여
 
         - 방화벽 인바운드 규칙 생성
     
