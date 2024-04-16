@@ -14,9 +14,9 @@ timezone: Asia/Seoul
 # jekyll-seo-tag settings › https://github.com/jekyll/jekyll-seo-tag/blob/master/docs/usage.md
 # ↓ --------------------------
 
-title: 민혁의 개발 블로그 # the main title
+title: 민혁의 공부 블로그 # the main title
 
-tagline: Developer + Cloud Engineer + Hacker를 목표로 공부하고 있습니다． # it will display as the sub-title
+tagline: Developer + Cloud Engineer를 목표로 공부하고 있습니다． # it will display as the sub-title
 
 description: 수업과 개인 학습을 통해 Linux, AWS, Kubernetes 지식과 Cloud Infra 운영 노하우를 기록하고 공유하는 기술 블로그입니다．
 
@@ -138,7 +138,9 @@ pwa:
 paginate: 10
 
 # The base URL of your site
-baseurl: "/minyeokue"
+baseurl: # "/minyeokue"
+
+repository: "https://github.com/minyeokue/minyeokue.github.io"
 
 # ------------ The following options are not recommended to be modified ------------------
 

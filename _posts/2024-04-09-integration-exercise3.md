@@ -3,7 +3,7 @@ title: 통합 실습 3 - NAT 포트포워딩을 통한 MariaDB, DNS, IIS, FTP �
 excerpt: "윈도우 2003 서버에서 NAT 포트포워딩을 진행해 사설망 안의 MariaDB, DNS, IIS, FTP 서버들에 접속하고 원격 데스크톱으로 연결한다."
 author: minyeokue
 date: 2024-04-09 19:08:51 +0900
-last_modified_at: 2024-04-11 08:48:45 +0900
+last_modified_at: 2024-04-13 16:42:13 +0900
 categories: [Exercise]
 tags: [Linux, Windows, Firewall, MariaDB, Secure, Network, DNS]
 
@@ -18,8 +18,6 @@ toc_sticky: true
 <br>
 
 ---
-
-<br>
 
 ## 시나리오
 
@@ -63,9 +61,9 @@ toc_sticky: true
 
         - FTP 서버 홈 디렉토리 : C:\ftpdata
 
-        - blogAdmin 사용자 생성 => FTP 서버 읽기, 쓰기 권한 부여
+        - minyeokue 사용자 생성 => FTP 서버 읽기, 쓰기 권한 부여
 
-        - bloguser 사용자 생성 => FTP 서버 읽기 권한 부여
+        - gitblog 사용자 생성 => FTP 서버 읽기 권한 부여
 
         - 방화벽 인바운드 규칙 생성
     
@@ -419,7 +417,7 @@ _웹 서버 기본 문서 작성_
 
 IIS 서버 설정에는 많은 설정들이 있지만, 다음에 다루도록 하겠다.
 
-ISS 관리자에서 FTP 서버 관련 설정을 조작할 수 있기 때문에 이어서 진행한다.
+IIS 관리자에서 FTP 서버 관련 설정을 조작할 수 있기 때문에 이어서 진행한다.
 
 <br>
 
