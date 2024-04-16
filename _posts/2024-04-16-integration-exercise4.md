@@ -3,7 +3,7 @@ title: 윈도우 서버 실습 1 - AD Certificate Services를 활용한 보안 �
 excerpt: Window Server Active Directory Certificate Services를 활용해 보안 웹 인증서를 발급받고, Default Domain Policy, Site to Site VPN, RAID, 원격 데스크톱 연결을 실습한다.
 author: minyeokue
 date: 2024-04-16 16:40:57 +0900
-last_modified_at: 2024-04-16 22:17:19 +0900
+last_modified_at: 2024-04-16 22:19:57 +0900
 categories: [Exercise]
 tags: [Windows, Firewall, Network, Policy, RAID, VPN, Active Directory]
 
