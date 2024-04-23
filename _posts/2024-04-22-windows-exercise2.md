@@ -3,7 +3,7 @@ title: 윈도우 서버 실습 2 - Hyper-V 가상 머신들로 수업 복습 및
 excerpt: 
 author: minyeokue
 date: 2024-04-22 17:48:54 +0900
-last_modified_at: 2024-04-23 17:49:03 +0900
+last_modified_at: 2024-04-24 00:56:30 +0900
 categories: [Exercise]
 tags: [Windows, Hyper-V, Live-Migration, Firewall, Network, Active Directory]
 
@@ -263,3 +263,138 @@ _Hyper-V 관리자 - 가상 컴퓨터 생성 1_
 
 <br>
 
+![Hyper-V 관리자 - 가상 컴퓨터 생성 2](/assets/img/2024-04-22/27.png)
+_Hyper-V 관리자 - 가상 컴퓨터 생성 2_
+
+**win2003-1**이라는 이름으로 가상 컴퓨터를 생성하겠다고 지정하고, **다음** 버튼을 누른다.
+
+<br>
+
+![Hyper-V 관리자 - 가상 컴퓨터 생성 3](/assets/img/2024-04-22/28.png)
+_Hyper-V 관리자 - 가상 컴퓨터 생성 3_
+
+**1세대**를 선택하고, **다음** 버튼을 누른다.
+
+<br>
+
+![Hyper-V 관리자 - 가상 컴퓨터 생성 4](/assets/img/2024-04-22/29.png)
+_Hyper-V 관리자 - 가상 컴퓨터 생성 4_
+
+메모리를 **512MB**로 설정하고, **다음** 버튼을 누른다.
+
+메모리는 VMware를 실행한 호스트 OS의 실제 메모리에 기반하여 적절한 양을 선택해야 한다.
+
+<br>
+
+![Hyper-V 관리자 - 가상 컴퓨터 생성 5](/assets/img/2024-04-22/30.png)
+_Hyper-V 관리자 - 가상 컴퓨터 생성 5_
+
+외부 인터넷과 통신을 하기 위해 VMnet8과 동일한 대역인 192.168.1.X 대역의 IP인 **External**을 선택하고 **다음** 버튼을 누른다.
+
+<br>
+
+![Hyper-V 관리자 - 가상 컴퓨터 생성 6](/assets/img/2024-04-22/31.png)
+_Hyper-V 관리자 - 가상 컴퓨터 생성 6_
+
+아까 생성했던 가상 하드디스크를 지정하고, **다음** 버튼을 누른다.
+
+![Hyper-V 관리자 - 가상 컴퓨터 생성 완료](/assets/img/2024-04-22/32.png)
+_Hyper-V 관리자 - 가상 컴퓨터 생성 완료_
+
+**마침** 버튼을 누른다.
+
+<br>
+
+![Hyper-V 관리자 - 가상 컴퓨터 생성 확인](/assets/img/2024-04-22/33.png)
+_Hyper-V 관리자 - 가상 컴퓨터 생성 확인_
+
+가상 컴퓨터가 생성된 것을 확인할 수 있다.
+
+이제 OS 이미지 파일을 마운트시키고 부팅하면 설치가 시작된다.
+
+<br>
+
+![Hyper-V 관리자 - 가상 컴퓨터 설정 위치](/assets/img/2024-04-22/34.png)
+_Hyper-V 관리자 - 가상 컴퓨터 설정 위치_
+
+마운트 시키기 위해 가상 컴퓨터의 설정을 조작한다.
+
+![Hyper-V 관리자 - 가상 컴퓨터 이미지 마운트](/assets/img/2024-04-22/35.png)
+_Hyper-V 관리자 - 가상 컴퓨터 이미지 마운트_
+
+위 사진처럼 필요한 이미지를 마운트하고, 부팅하면 설치가 진행된다.
+
+설치가 다 진행되었다고 가정한다. 이제 신속한 배포를 위해 **sysprep**을 생성할 것이다.
+
+<br>
+
+![Hyper-V - 가상 컴퓨터 sysprep 1](/assets/img/2024-04-22/36.png)
+_Hyper-V - 가상 컴퓨터 sysprep 1_
+
+이미지 파일이 마운트된 디스크를 **열기**를 눌러 들어온 상태이다. **SUPPORT** 폴더 안으로 들어간다.
+
+![Hyper-V - 가상 컴퓨터 sysprep 2](/assets/img/2024-04-22/37.png)
+_Hyper-V - 가상 컴퓨터 sysprep 2_
+
+**TOOLS** 폴더 안으로 들어간다.
+
+<br>
+
+![Hyper-V - 가상 컴퓨터 sysprep 3](/assets/img/2024-04-22/38.png)
+_Hyper-V - 가상 컴퓨터 sysprep 3_
+
+**DEPLOY.CAB**을 더블 클릭한다.
+
+<br>
+
+![Hyper-V - 가상 컴퓨터 sysprep 4](/assets/img/2024-04-22/39.png)
+_Hyper-V - 가상 컴퓨터 sysprep 4_
+
+모든 파일을 *드래그로 선택*하고 *오른쪽 마우스 클릭* 후, **압축 풀기** 메뉴를 선택한다.
+
+<br>
+
+![Hyper-V - 가상 컴퓨터 sysprep 5](/assets/img/2024-04-22/40.png)
+_Hyper-V - 가상 컴퓨터 sysprep 5_
+
+C 드라이브 아래에 **sysprep**이라는 폴더를 생성한 뒤, 선택하고 **압축 풀기** 버튼을 누른다.
+
+<br>
+
+이제 선택했던 파일들이 *sysprep* 폴더 안에 압축이 풀렸을 것이다.
+
+해당 폴더로 이동하면 다음과 같은 상태이다.
+
+![Hyper-V - 가상 컴퓨터 sysprep 6](/assets/img/2024-04-22/41.png)
+_Hyper-V - 가상 컴퓨터 sysprep 6_
+
+**sysprep.exe** 파일을 실행한다.
+
+![Hyper-V - 가상 컴퓨터 sysprep 7](/assets/img/2024-04-22/42.png)
+_Hyper-V - 가상 컴퓨터 sysprep 7_
+
+**확인** 버튼을 누른다.
+
+<br>
+
+![Hyper-V - 가상 컴퓨터 sysprep 8](/assets/img/2024-04-22/43.png)
+_Hyper-V - 가상 컴퓨터 sysprep 8_
+
+**다시 봉인** 버튼을 누른다.
+
+![Hyper-V - 가상 컴퓨터 sysprep 9](/assets/img/2024-04-22/44.png)
+_Hyper-V - 가상 컴퓨터 sysprep 9_
+
+*보안 ID(SID)*를 다시 생성하여 동일한 값이 생길 수 없도록 한다.
+
+잠시 기다리면 컴퓨터가 종료된다.
+
+지금 상태에서 해당 디스크를 복사하면 부팅할 때마다 새로운 SID를 생성하며 신속한 배포가 가능한 상태가 된다.
+
+<br>
+
+최신 OS의 경우 Window + R키 -> 실행창에서 `sysprep`을 입력하면 바로 시스템 준비도구를 실행시키는 폴더가 열린다. 즉, 최신 OS가 좀 더 수월하고 빠르게 가상머신들을 배포할 수 있다.
+
+<br>
+
+추후 작성..

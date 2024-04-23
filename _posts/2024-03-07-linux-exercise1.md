@@ -2,7 +2,7 @@
 title: 리눅스 실습문제 1
 author: minyeokue
 date: 2024-03-07 18:00:00 +0900
-last_modified_at: 2024-03-19 21:02:18 +0900
+last_modified_at: 2024-04-24 00:56:21 +0900
 categories: [Exercise]
 tags: [Linux, RAID]
 render_with_liquid: false
@@ -13,7 +13,7 @@ toc_sticky: true
 
 <br>
 
-리눅스 기본 명령어 및 하드디스크 레이드
+리눅스 기본 명령어 실습하며 기본 개념을 익힌다.
 
 <br>
 
@@ -465,25 +465,3 @@ w           # 적용
 [root@localhost ~]# mount /dev/sdb6 /mydata2
 [root@localhost ~]# vim /etc/fstab
 ```
-
-<br>
-
-
-## 24. 레이드 시나리오
-
-<br>
-
-/dev/sdc /dev/sdd -> raid 0설정
-/dev/sde /dev/sdf -> raid 1로 구성
-/raid0data   /raid1data
-각각 마운트 하시오
-
-<br>
-
-/raid0data /raid1data에 test 파일을 생성한다.
-/dev/sdf  하드디스크를 제거 후  내결함성 확인
-하드 디스크 하나를 추가해서 원래의 상태로 복구하시오..
-
-<br>
-
-추후 작성하도록 하겠다.
