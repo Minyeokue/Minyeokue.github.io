@@ -1,9 +1,9 @@
 ---
-title: 윈도우 서버 실습 2 - Hyper-V 가상 머신들로 수업 복습 및 VLAN 그리고 Hyper-V Live Migration 실습
+title: 윈도우 서버 실습 2 - Hyper-V 가상 머신들로 수업 복습과 네트워크 공유 그리고 Hyper-V Live Migration 실습
 excerpt: 
 author: minyeokue
 date: 2024-04-22 17:48:54 +0900
-last_modified_at: 2024-04-24 22:15:49 +0900
+last_modified_at: 2024-04-29 22:36:10 +0900
 categories: [Exercise]
 tags: [Windows, Hyper-V, Live-Migration, Firewall, Network, Active Directory]
 
@@ -51,21 +51,21 @@ Window Server에서 Hyper-V 가상화로 지난 수업들을 복습하고, 가�
 
             - [테스트 - 원격 데스크톱 연결](#테스트---원격-데스크톱-연결)
 
-    - [VLAN 구성](#vlan-구성)
-
-    - [Hyper-V 핵심기능](#hyper-v-핵심기능)
+    - [Hyper-V 핵심기능](#hyper-v-핵심-기능)
 
         - [Hyper-V Shared Nothing Migration](#hyper-v-shared-nothing-migration)
 
+            - [Hyper-V Shared Nothing Migration 테스트](#shared-nothing-live-migration-테스트)
+
         - [Hyper-V SMB Live Migration](#hyper-v-smb-live-migration)
+
+            - [Hyper-V SMB Live Migration 테스트](#hyper-v-smb-live-migration-테스트)
 
         - [Hyper-V Storage Live Migration](#hyper-v-storage-live-migration)
 
         - [Hyper-V Replication](#hyper-v-replication)
-    
-    - [NFS 공유 및 웹 서버](#nfs-공유-및-웹-서버)
 
-        - [NFS 클라이언트](#nfs-클라이언트)
+            - [Hyper-V Replcation 테스트](#hyper-v-replication-테스트)
 
 <br>
 
@@ -425,6 +425,12 @@ _DC1 가상 하드디스크 상태_
 
 <br>
 
+---
+
+#### 저장소 공유
+
+<br>
+
 ![DC1 공유 폴더 설정 1](/assets/img/2024-04-22/47.png)
 _DC1 공유 폴더 설정 1_
 
@@ -722,12 +728,323 @@ _원격 데스크톱 연결 테스트_
 
 원격 데스크톱 연결 테스트를 완료했다.
 
+<br>
+
 ---
 
-### VLAN 구성
+### Hyper-V 핵심 기능
 
 <br>
 
-모든 가상 네트워크 스위치를 "External"으로 전환한 뒤, win2003-2와 win2003-3에 각각 VLAN ID를 부여한다.
+이제 Hyper-V의 핵심 기능인 Live Migration에 대해서 실습한다. **Live Migration**은 가상 머신이 켜져있는 상태에서 가상머신이 실행되는 프로세스(메모리에 탑재된) 혹은 하드디스크를 옮길 수 있는 기술이다.
 
-추후 진행한다..
+가동 중지 시간 없이 실행 중인 Virtual Machines를 한 Hyper-V 호스트에서 다른 호스트로 투명하게 이동할 수 있다. **Windows 장애 조치(Failover) 클러스터링**와 함께 할 경우 Live Migration을 통해 **고가용성** 및 **내결함성** 시스템을 만들 수 있다.
+
+<br>
+
+Hyper-V의 실시간 Migration은 총 3가지가 존재한다.
+
+- SMB Live Migration
+
+- Live Storage Migration
+
+- Shared Nothing Live Migration
+
+먼저 **Shared Nothing Live Migration** 실습을 진행해보겠다.
+
+<br>
+
+---
+
+#### Shared Nothing Live Migration
+
+<br>
+
+`virtmgmt.msc`를 실행창에서 입력해 *Hyper-V 관리자* 창으로 온다.
+
+*SVR1*을 마우스 오른쪽 클릭으로 메뉴를 호출하거나 오른쪽 *작업* 탭에서 **Hyper-V 관리자**를 누른다.
+
+![Hyper-V 관리자 위치](/assets/img/2024-04-22/76.png)
+_Hyper-V 관리자 위치_
+
+<br>
+
+![실시간 마이그레이션 설정 1](/assets/img/2024-04-22/77.png)
+_실시간 마이그레이션 설정 1_
+
+**들어오고 나가는 실시간 마이그레이션 사용** 체크 -> **다음 IP 주소를 실시간 마이그레이션에 사용** 선택 -> **추가** 버튼
+
+<br>
+
+![실시간 마이그레이션 설정 2](/assets/img/2024-04-22/78.png)
+_실시간 마이그레이션 설정 2_
+
+현재 SVR1의 IP(192.168.1.110)를 입력한 뒤 **확인** 버튼을 누른다.
+
+![실시간 마이그레이션 설정 3](/assets/img/2024-04-22/79.png)
+_실시간 마이그레이션 설정 3_
+
+추가된 IP 주소를 확인하고 **적용** 혹은 **확인** 버튼을 누른다.
+
+<br>
+
+![실시간 마이그레이션 설정 완료](/assets/img/2024-04-22/80.png)
+_실시간 마이그레이션 설정 완료_
+
+*실시간 마이그레이션* 메뉴의 강조된 "+"를 눌러 확장하고 **고급 기능**을 누른다.
+
+**Kerberos 사용**을 선택하고 **확인** 혹은 **적용** 버튼을 누른다.
+
+<br>
+
+Shared Nothing Live Migration을 진행하기 위한 기본 설정이 모두 완료되었다.
+
+SVR2에도 같은 설정을 진행한다. 이제 실습을 진행한다.
+
+<br>
+
+---
+
+##### Shared Nothing Live Migration 테스트
+
+<br>
+
+> **Shared Nothing Live Migration**은 Virtual Machine의 *계획된 Live Migration*을 위해 고가의 하드웨어 요구사항이 필요 없이, 단순한 Hyper-V 호스트 2대만으로 Virtual Machine의 *계획된 Live Migration*을 구현할 수 있다는 장점이 있다.
+{: .prompt-info }
+
+![실시간 마이그레이션 위치](/assets/img/2024-04-22/81.png)
+_실시간 마이그레이션 위치_
+
+이동하고자 하는 가상 컴퓨터(가상 머신)을 선택하고 *마우스 오른쪽 클릭* 혹은 오른쪽 *작업* 탭에서 **이동** 메뉴를 선택한다.
+
+<br>
+
+![실시간 마이그레이션 마법사 진행](/assets/img/2024-04-22/82.gif)
+_실시간 마이그레이션 마법사 진행_
+
+위와 같은 단계로 진행한다. 프로그레스 바가 나오면 잠시 대기한다.
+
+<br>
+
+![실시간 마이그레이션 마법사 ping 확인](/assets/img/2024-04-22/83.gif)
+_실시간 마이그레이션 마법사 ping 확인_
+
+위 사진처럼 호스트 OS 명령 프롬프트에서 `ping -t 192.168.1.111` 명령어로 현재 가상 머신의 상태를 확인할 수 있다.
+
+진행 중에 통신이 닿지 않거나 시간이 튀는 부분이 생길 것이다.
+
+<br>
+
+![실시간 마이그레이션 마법사 완료](/assets/img/2024-04-22/84.png)
+_실시간 마이그레이션 마법사 완료_
+
+Live Migration이 완료되면 SVR1에서 연결했었던 "win2003-1"과의 세션이 아직 종료되지 않았다.
+
+해당 창에 SVR2.kosa.vm에서 실행 중인 것을 확인할 수 있다.
+
+<br>
+
+![실시간 마이그레이션 확인](/assets/img/2024-04-22/85.gif)
+_실시간 마이그레이션 확인_
+
+SVR1의 *Hyper-V 관리자*에서 win2003-1이 사라진 것을 확인할 수 있으며, SVR2의 *Hyper-V 관리자*에서 실행중이다.
+
+<br>
+
+---
+
+#### Hyper-V SMB Live Migration
+
+<br>
+
+**SMB Live Migration**은 Windows Server 2012 Hyper-V에서부터 소개된 기능으로, VM 데이터 파일이 위치하는 **공유 스토리지(SAN or iSCSI)**가 필요하며 지금은 네트워크 공유 기능으로 진행했다.
+
+SMB 공유 서버를 사용해 훨씬 효율적인 SMB Live Migration을 구현할 수도 있다. SMB Live Migration을 진행하기 앞서 먼저 설정해줘야 하는 부분들이 있다.
+
+<br>
+
+DC1에서 공유받은 스토리지인 "smb" 폴더에서 *공유* 탭과 *보안* 탭에서 설정을 진행하고, 실행창에서 `dsa.msc`를 입력해 *Active Directory 사용자 및 컴퓨터* 창에서 설정을 진행해야 한다.
+
+먼저 공유 폴더에서 설정을 진행한다.
+
+![SMB Live Migration 사전 설정 - 위치](/assets/img/2024-04-22/86.png)
+_SMB Live Migration 사전 설정 - 위치_
+
+smb 폴더를 *마우스 오른쪽 클릭*으로 메뉴를 호출한 뒤 **속성**을 선택한다.
+
+<br>
+
+![SMB Live Migration 사전 설정 - 네트워크 공유 위치](/assets/img/2024-04-22/87.png)
+_SMB Live Migration 사전 설정 - 네트워크 공유 위치_
+
+*공유* 탭에서 **고급 공유** 버튼을 누른다.
+
+<br>
+
+![SMB Live Migration 사전 설정 - 네트워크 공유 권한 위치](/assets/img/2024-04-22/88.png)
+_SMB Live Migration 사전 설정 - 네트워크 공유 권한 위치_
+
+**권한** 버튼을 누른다.
+
+<br>
+
+![SMB Live Migration 사전 설정 - 네트워크 공유 권한 추가](/assets/img/2024-04-22/89.gif)
+_SMB Live Migration 사전 설정 - 네트워크 공유 권한 추가_
+
+Active Directory의 **Global Catalog** DB에 **LDAP(Lightweight Directory Access Protocol)** 프로토콜을 통해 빠른 질의를 하는데, 대상에 컴퓨터도 추가한다.
+
+그 후 *SVR1*과 *SVR2*를 입력해 공유 폴더의 모든 권한을 부여하고, *Administrators* 그룹을 추가해 역시 모든 권한을 부여한다.
+
+<br>
+
+![SMB Live Migration 사전 설정 - NTFS 보안 권한 추가](/assets/img/2024-04-22/90.gif)
+_SMB Live Migration 사전 설정 - NTFS 보안 권한 추가_
+
+SVR1과 SVR2 컴퓨터에 NTFS 사용권한을 부여한다.
+
+> *NTFS 사용권한*은 파티션 혹은 볼륨이 **NTFS 파일 시스템으로 포맷**되어 있어야만 부여할 수 있으며, NTFS 사용 권한은 공유 폴더 사용권한과 달리 파일과 폴더 각각에 대해서 부여할 수 있다. 또한, 부여된 권한은 개별적으로 적용된다. NTFS 사용권한은 *사용자가 로컬로 자원에 액세스하거나, 네트워크를 통해 액세스하는 모든 경우에 적용된다.*
+{: .prompt-info }
+
+> NTFS 파티션 또는 볼륨 상에 있는 모든 폴더와 파일들은 자신의 **ACL(Access Control List)**를 가지고 있으며, 이 ACL이 NTFS 사용권한이다. ACL은 액세스 가능한 사용자들의 목록이며 *설정한 사용자들을 제외한 모든 것을 거부하는 화이트리스트(Whitelist; passlist, allowlist)의 특성*을 갖는다. -> **명시적 허가 목록**
+{: .prompt-tip }
+
+<br>
+
+실행창에서 `dsa.msc`를 입력해 *Active Directory 사용자 및 컴퓨터* 창을 실행한다.
+
+![SMB Live Migration 사전 설정 - AD 사용자 및 컴퓨터](/assets/img/2024-04-22/91.png)
+_SMB Live Migration 사전 설정 - AD 사용자 및 컴퓨터_
+
+<br>
+
+![SMB Live Migration 사전 설정 - AD 사용자 및 컴퓨터 권한 위임 진행](/assets/img/2024-04-22/92.gif)
+_SMB Live Migration 사전 설정 - AD 사용자 및 컴퓨터 권한 위임 진행_
+
+SVR1에서 권한을 DC1에게 위임한다. Kerberos 인증을 통해 진행되며 **CIFS(Common Internet File System)**라는 프로토콜을 선택한다.
+
+> CIFS(Common Internet File System)은 네트워크상의 효율적인 파일 공유를 위한 파일 액세스 스토로지 프로토콜로, CIFS는 SMB(Server Message Block) 프로토콜을 기반으로 확장된 버전이다. 또한, 윈도우와 유닉스 환경을 동시에 지원하는 표준 파일 규약입니다.
+{: .prompt-info }
+
+추가한 뒤 **확인** 버튼을 누른다. 또한, SVR2를 선택해서 동일하게 진행한다.
+
+<br>
+
+![SMB Live Migration 사전 설정 - AD 사용자 및 컴퓨터 서비스 권한 허용](/assets/img/2024-04-22/93.gif)
+_SMB Live Migration 사전 설정 - AD 사용자 및 컴퓨터 서비스 권한 허용_
+
+Domain Controller(DC1)에서 SVR1과 SVR2에 대해 **Microsoft Virtual System Migration** 서비스 종류에 대해 Kerberos 인증 과정을 거쳐 가능하도록 허용하는 과정이다.
+
+여기까지 진행했다면, 사전 설정은 모두 완료되었다.
+
+---
+
+##### Hyper-V SMB Live Migration 테스트
+
+<br>
+
+DC1에서 다시 SVR1으로 돌아온다.
+
+![SMB Live Migration 테스트 진행](/assets/img/2024-04-22/94.gif)
+_SMB Live Migration 테스트 진행_
+
+DC1으로부터 공유받은 폴더에 존재하는 가상 하드디스크로 SVR1에서 부팅해 SVR1의 컴퓨터 리소스를 사용하던 "win2003-3"을 SMB Live Migration을 통해 SVR2가 CPU 및 메모리를 이어받아 켜진 상태로 Live Migration을 진행된다.
+
+<br>
+
+![SMB Live Migration 테스트 결과 확인](/assets/img/2024-04-22/95.gif)
+_SMB Live Migration 테스트 결과 확인_
+
+"win2003-3"의 실시간 마이그레이션이 정상적으로 완료되었다.
+
+*Shared Nothing Live Migration*에 비하면 더 빠른 속도 진행된다. 그 이유는 *Shared Nothing Live Migration*은 가상 컴퓨터와 가상 하드디스크 모두를 이동하기 때문이며, **SMB Live Migration**은 가상 컴퓨터만 이동해 훨씬 빠르다.
+
+<br>
+
+---
+
+#### Hyper-V Storage Live Migration
+
+<br>
+
+![Storage Live Migration - 하드디스크 상태](/assets/img/2024-04-22/96.png)
+_Storage Live Migration - 하드디스크 상태_
+
+![Storage Live Migration - 저장소 마이그레이션 상태](/assets/img/2024-04-22/97.png)
+_Storage Live Migration - 저장소 마이그레이션 상태_
+
+현재 상태는 SVR1의 `C:\Hyper-V\VHDs\win2003-2.vhdx`{:.filepath}에 존재한다. DC1의 공유 스토리지로 이동시켜보겠다.
+
+<br>
+
+![Storage Live Migration - 테스트 진행](/assets/img/2024-04-22/98.gif)
+_Storage Live Migration - 테스트 진행_
+
+![Storage Live Migration - 테스트 완료](/assets/img/2024-04-22/99.gif)
+_Storage Live Migration - 저장소 마이그레이션 상태_
+
+저장소 마이그레이션이 정상적으로 완료되었다.
+
+<br>
+
+---
+
+#### Hyper-V Replication
+
+<br>
+
+**Hyper-V Replica**는 가상 머신의 *"계획된 다운타임 -> Maintenance"* 또는 *"계획되지 않은 다운타임 -> Emergency"*시에 Hyper-V Replica는 **가상 머신의 중단 없는 사용을 보장**할 수 있다.
+
+*Hyper-V Replica*는 가상 머신의 **비동기(Asynchronous)** 복제 방식을 지원하며, 아주 단순하게 구성할 수 있고 공유 스토리지 및 특정 스토리지 하드웨어를 요구하지 않는다.
+
+복제는 통상적인 IP 기반 네트워크를 통해 전송되며, 복제되는 데이터는 전송 중에 **암호화**된다.
+
+또한, Hyper-V Replica는 단독 서버, 장애 조치(Failover) 클러스터 및 혼합 환경 모두 지원한다.
+
+Hyper-V Replica에 참여하는 서버들은 물리적으로 동일한 지역에 위치할 수도 있고, 지역적으로 분산되어 존재할 수도 있다. 이러한 물리적인 서버들은 반드시 동일 도메인 내의 서버일 필요도 없다. 물론 물리적 서버들이 동일 도메인이 아닌 다른 도메인의 멤버 서버일 수도 있다.
+
+<br>
+
+![Replica 복제 서버 설정 진행](/assets/img/2024-04-22/100.gif)
+_Replica 복제 서버 설정 진행_
+
+Hyper-V 설정 -> *복제 구성* 메뉴 -> **이 컴퓨터을(를) 복제본 서버로 사용합니다.** 체크 -> **Kerberos 인증 사용(HTTP)** 체크 및 포트 변경 -> **인증된 서버로부터 복제 허용** 체크 -> 실행창 `wf.msc` -> 고급 보안이 포함된 Windows Defender 방화벽 "인바운드 설정" -> *Hyper-V 복제본 HTTP 수신기(TCP-In)* **사용** 순서로 진행한다.
+
+같은 내용을 SVR2에서도 진행한다.
+
+<br>
+
+---
+
+##### Hyper-V Replication 테스트
+
+<br>
+
+SVR2에 있는 Linux01을 복제하며 SVR1을 복제본 서버로 활용할 것이다.
+
+![Replica 주서버 복제 사용](/assets/img/2024-04-22/101.png)
+_Replica 주서버 복제 사용_
+
+<br>
+
+![Replica 복제 사용 설정 진행](/assets/img/2024-04-22/102.gif)
+_Replica 복제 사용 설정 진행_
+
+이제 복제를 진행한다. 초기 복제를 진행하며 5분 간격으로 변경 사항을 SVR2에서 SVR1으로 전달한다.
+
+![Replica 복제 사용 설정 확인](/assets/img/2024-04-22/103.gif)
+_Replica 복제 사용 설정 확인_
+
+조금 기다리면 복제본 상태가 *정상*으로 전환된다.
+
+<br>
+
+이제 **계획된 장애 조치(Failover)**를 진행할 수 있다.
+
+계획된 장애 조치는 해당 가상 머신을 종료한 상태에서 진행할 수 있으며, 복제본 서버를 주 서버로 전환하고 해당 가상 머신을 가동한다.
+
+![Replica - 계획된 장애 조치(Failover) 진행](/assets/img/2024-04-22/104.gif)
+_Replica - 계획된 장애 조치(Failover) 진행_
+
+계획된 장애 조치가 진행되어 복제본 서버였던 SVR1이 주서버로 전환되고, 역방향 복제를 진행해 SVR2를 복제본 서버로 설정하는 과정이 필요하다.
+
+모든 테스트 및 실습을 완료하였다.
