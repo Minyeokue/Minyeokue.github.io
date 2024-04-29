@@ -3,7 +3,7 @@ title: 윈도우 서버 실습 2 - Hyper-V 가상 머신들로 수업 복습과 
 excerpt: 
 author: minyeokue
 date: 2024-04-22 17:48:54 +0900
-last_modified_at: 2024-04-29 22:36:10 +0900
+last_modified_at: 2024-04-30 08:41:51 +0900
 categories: [Exercise]
 tags: [Windows, Hyper-V, Live-Migration, Firewall, Network, Active Directory]
 
@@ -55,17 +55,11 @@ Window Server에서 Hyper-V 가상화로 지난 수업들을 복습하고, 가�
 
         - [Hyper-V Shared Nothing Migration](#hyper-v-shared-nothing-migration)
 
-            - [Hyper-V Shared Nothing Migration 테스트](#shared-nothing-live-migration-테스트)
-
         - [Hyper-V SMB Live Migration](#hyper-v-smb-live-migration)
-
-            - [Hyper-V SMB Live Migration 테스트](#hyper-v-smb-live-migration-테스트)
 
         - [Hyper-V Storage Live Migration](#hyper-v-storage-live-migration)
 
         - [Hyper-V Replication](#hyper-v-replication)
-
-            - [Hyper-V Replcation 테스트](#hyper-v-replication-테스트)
 
 <br>
 
@@ -922,7 +916,7 @@ _SMB Live Migration 사전 설정 - AD 사용자 및 컴퓨터 권한 위임 진
 
 SVR1에서 권한을 DC1에게 위임한다. Kerberos 인증을 통해 진행되며 **CIFS(Common Internet File System)**라는 프로토콜을 선택한다.
 
-> CIFS(Common Internet File System)은 네트워크상의 효율적인 파일 공유를 위한 파일 액세스 스토로지 프로토콜로, CIFS는 SMB(Server Message Block) 프로토콜을 기반으로 확장된 버전이다. 또한, 윈도우와 유닉스 환경을 동시에 지원하는 표준 파일 규약입니다.
+> CIFS(Common Internet File System)은 네트워크상의 효율적인 파일 공유를 위한 파일 액세스 스토리지 프로토콜로, CIFS는 SMB(Server Message Block) 프로토콜을 기반으로 확장된 버전이다. 또한, 윈도우와 유닉스 환경을 동시에 지원하는 표준 파일 규약입니다.
 {: .prompt-info }
 
 추가한 뒤 **확인** 버튼을 누른다. 또한, SVR2를 선택해서 동일하게 진행한다.
