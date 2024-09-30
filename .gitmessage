@@ -1,0 +1,24 @@
+<type>(context): <subject>
+##### Example #####
+# feat(context): Add New "Feature"
+
+# Descriptions of new Feature
+
+# Resolves: #111
+# Ref: #122
+# related to: #30, #50
+###### Title ######
+# feat: about new feature
+# fix: about fixed bugs
+# docs: Edit documentation
+# style: code formatting, missing semicolon, No code changes
+# refactor: refactoring code
+# test: Add test code, refactoring test code
+# chore: Build task modifications, package manager modifications, \
+#        non-production code related parts (.gitignore, build.gradle, etc.)
+# comment: Adding and changing annotations
+# remove: Delete files, folders
+# rename: Rename files and folders
+##### Subject #####
+# Add, Remove, Simplify, Update
+# Implement, Prevent, Move, Rename
