@@ -331,7 +331,7 @@ resource "helm_release" "metrics-server" {
 다음은 `terraform apply` 명령어로 실제 리소스를 생성하는 영상이며, 생성 시간이 15분 이상 걸리는 관계로 배속으로 진행하였습니다.
 
 <video controls width="800">
-  <source src="/assets/mp4/terraform-apply.mp4" type="video/mp4">
+  <source src="assets/mp4/terraform-apply.mp4" type="video/mp4">
 </video>
 
 outputs.tf 파일을 정의해 `terraform apply`를 통해 생성한 AWS 리소스에 대한 정보 중 IPSec 및 라우팅에 필요한 정보를 tfstate 파일에 저장합니다.
@@ -678,7 +678,7 @@ IPSec 구성에서 커널 설정이 필요했던 것처럼 라우팅에도 필�
 다음은 Ansible로 FRR 구성을 자동화하며 tfstate 파일을 읽은 정보를 토대로 명령어 입력 순서대로 정리한 파일을 출력하며, 관련 설정을 진행하는 영상입니다.
 
 <video controls width="800">
-  <source src="/assets/mp4/ansible-frr.mp4" type="video/mp4">
+  <source src="assets/mp4/ansible-frr.mp4" type="video/mp4">
 </video>
 
 <br>
@@ -734,7 +734,7 @@ write file
 위 라우터 명령어를 입력한 결과는 다음과 같습니다.
 
 <video controls width="800">
-  <source src="/assets/mp4/vtysh.mp4" type="video/mp4">
+  <source src="assets/mp4/vtysh.mp4" type="video/mp4">
 </video>
 
 ---
@@ -751,7 +751,7 @@ _AWS VPN 연결 성공_
 이후 VPN 연결을 통해 온프레미스 네트워크(192.168.2.0/24) 대역에서 AWS CIDR(172.20.0.0/16)로 통신이 가능한지 테스트합니다.
 
 <video controls width="800">
-  <source src="/assets/mp4/ping-test.mp4" type="video/mp4">
+  <source src="assets/mp4/ping-test.mp4" type="video/mp4">
 </video>
 
 <br>
