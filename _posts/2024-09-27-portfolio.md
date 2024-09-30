@@ -784,7 +784,7 @@ _AWS VPN 연결 성공_
 
 다음은 입력한 명령어의 목록입니다.
 
-```Shell
+```bash
 # chrony(ntp) 설치 및 시작 등록
 sudo dnf install chrony -y
 
