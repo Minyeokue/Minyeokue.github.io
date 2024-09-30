@@ -3,7 +3,7 @@ title: AWS Site-to-Site VPN을 통한 하이브리드 클라우드 구축 프로
 excerpt: AWS S2S VPN을 통한 하이브리드 클라우드 구축 시 Terraform과 Ansible로 자동화한 과정입니다.
 author: minyeokue
 date: 2024-09-27 11:54:28 +0900
-last_modified_at: 2024-09-30 15:07:22 +0900
+last_modified_at: 2024-09-30 17:19:48 +0900
 categories: [Project]
 tags: [AWS, VPN, IPSec, FRR, Terraform, Ansible]
 
@@ -785,29 +785,24 @@ _AWS VPN 연결 성공_
 다음은 입력한 명령어의 목록입니다.
 
 ```bash
-
-# chrony(ntp) 설치 및 시작 등록
 sudo dnf install chrony -y
 
-# 현재 적용 중인 서버 풀 및 서버 등록을 해제하기 위함
 sed -i 's/^pool/#pool/g' /etc/chrony.conf
 sed -i 's/^server/#server/g' /etc/chrony.conf
 
-# /etc/chrony.conf 맨 아래에 time.bora.net, time.google.com 추가
 cat <<EOF | sudo tee /etc/chrony.conf
 server time.bora.net
 server time.google.com
 EOF
 
-# 서비스 시작
 sudo systemctl enable --now chronyd
 
-# 시간 서버 정보 확인
 chronyc sources -v
 
-# 리눅스 시간을 시간 서버의 시간으로 동기화
 chronyc tracking
 ```
+
+`chrony`를 설치하고, 동기화하려는 서버를 지정합니다. 이후 서비스를 시작과 동시에 재부팅 시에도 자동으로 `chronyd` 서비스가 시작할 수 있도록 설정합니다.
 
 시간 서버 데몬을 실행시켜도 시간이 동기화되지 않을 수 있기 때문에, `chronyc tracking` 명령어를 입력해야 합니다.
 
@@ -820,16 +815,16 @@ _권한 획득 실패_
 
 권한을 얻는 과정에서 실패하는 것을 확인할 수 있다.
 
-이는, Terraform 모듈 중 EKS를 설정할 때 여러 테스트를 진행하다가 필수 설정을 제외하면서 발생한 오류이다.
+이는, Terraform 모듈 중 EKS를 설정할 때 여러 테스트를 진행하다가 필수 설정을 제외하면서 발생한 오류입니다.
 
 <br>
 
 ![클러스터 생성 권한 필수 설정](/assets/img/2024-09-27/7.png)
 _클러스터 생성 권한 필수 설정_
 
-`enable_cluster_creator_admin_permissions = true` boolean 값을 true로 설정하면, **eks 모듈을 통해 eks 클러스터를 생성하는 사용자에게도 AmazoneEKSClusterAdminPolicy 를 부여**한다.
+`enable_cluster_creator_admin_permissions = true` boolean 값을 true로 설정하면, **eks 모듈을 통해 eks 클러스터를 생성하는 사용자에게도 AmazoneEKSClusterAdminPolicy 를 부여**합니다.
 
-아래의 `access_entries` EKS 클러스터를 생성하며 함께 작업할 동료에게 권한을 부여할 때 지정하는 필드를 의미한다.
+아래의 `access_entries` EKS 클러스터를 생성하며 함께 작업할 동료에게 권한을 부여할 때 지정하는 필드를 의미합니다.
 
 <br>
 
@@ -838,7 +833,7 @@ _클러스터 생성 권한 필수 설정_
 ![VPN Gateway 미연결](/assets/img/2024-09-27/8.png)
 _VPN Gateway 미연결_
 
-위 사진에서 VPN 게이트웨이가 NotAttached 되어 있다고 에러 메시지가 나오는데, 이는 Terraform에서 VPC 리소스와 VPN 리소스를 정의하는 부분에서 해결할 수 있다.
+위 사진에서 VPN 게이트웨이가 NotAttached 되어 있다고 에러 메시지가 나오는데, 이는 Terraform에서 VPC 리소스와 VPN 리소스를 정의하는 부분에서 해결할 수 있습니다.
 
 <br>
 
